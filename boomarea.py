@@ -1,5 +1,5 @@
 import numpy as np
-import reactionforces
+from constants import *
 
 
 coordinates = np.zeros((2,2))
