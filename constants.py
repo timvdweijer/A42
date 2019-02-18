@@ -29,5 +29,5 @@ theta = 26.             #max upwards deflect [deg]
 
 #Material and Sturctural Properties
 E = 73.1*10**9          #E-modulus [Pa]
-G = 28*10**9            #Shear Modulus [Pa]
-tau_ult = 283*10**6     #Shear Strength [Pa]
+G = 28.*10**9            #Shear Modulus [Pa]
+tau_ult = 283.*10**6     #Shear Strength [Pa]
