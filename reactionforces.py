@@ -5,9 +5,9 @@ Created on Mon Feb 18 15:21:27 2019
 @author: Harold
 """
 import numpy as np
-import boomarea
+#import boomarea
 from constants import *
-a = boomarea.coordinates
+#a = boomarea.coordinates
 
 #Unkown Reaction Forces
 #F_1Y
@@ -21,7 +21,7 @@ a = boomarea.coordinates
 
 
 
-I = 0.00000001                  #Moment of Inertia [m^4]
+I = 0.0000001                  #Moment of Inertia [m^4]
 #F_2X
 F_2X = 0.
 
