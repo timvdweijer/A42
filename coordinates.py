@@ -42,7 +42,6 @@ def coordinate(chord, radius, n_st):
     plt.axis([max(coordinatesz)+.02, -.484 , -.2, .2])
     plt.show()
    
-    
     return (coordinatesy, coordinatesz)
 
 coordinate(constants.C_a, constants.h/2, constants.n_st)
