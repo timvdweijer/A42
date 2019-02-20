@@ -4,6 +4,10 @@ Created on Mon Feb 18 15:21:27 2019
 
 @author: Harold
 """
+import numpy as np
+#import boomarea
+from constants import *
+#a = boomarea.coordinates
 
 #Unkown Reaction Forces
 #F_1Y
@@ -15,6 +19,7 @@ Created on Mon Feb 18 15:21:27 2019
 #F_3Z
 #F_act1
 
+<<<<<<< HEAD
 #Known Forces 
 P = 37.9*10**3      #F_act2 [N]
 q = 2.71*10**3      #Aerodynamic loac [N/m]
@@ -36,3 +41,24 @@ n_st = 13           #number of stiffeners [-]
 d_1 = 0.681*10**-2  #vert displ hinge 1 [m]
 d_3 = 2.03*10**-2   #vert displ hinge 3 [m]
 theta = 26          #max upwards deflect [deg]
+=======
+
+
+I = 0.0000001                  #Moment of Inertia [m^4]
+#F_2X
+F_2X = 0.
+
+#F_1Y from eq 3.10
+F_1Y = (d_1-(-q*(x_2-x_1)**4)/(8*E*I))*((3*E*I)/((x_2-x_1)**3))
+print (F_1Y)
+
+#F_3Y from eq 3.14
+F_3Y = (d_3-(-q*(x_3-x_2)**4)/(8*E*I))*((3*E*I)/((x_3-x_2)**3))
+
+#F_2Y from 3.2
+F_2Y = -F_1Y-F_3Y+q*l_a
+print (F_2Y)
+
+b = -q*0.5*x_2**2+F_1Y*(x_1-x_2)+F_3Y*(x_3-x_2)+q*0.5*(l_a-x_2)**2
+print (b)
+>>>>>>> 576280f1ffaffda82853fd2e9f747b7b22dc3cd4
