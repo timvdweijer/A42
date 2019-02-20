@@ -40,7 +40,7 @@ F_2X = 0.
 #Matrix of the multiplyers of F_1Y and F_2Y
 ymulti = np.array([[E*I*((((x_3-x_1)**3-(x_2-x_1)**3)/6)+(x_3-x_2)*(((x_2-x_1)**3/6)/(x_1-x_2))),E*I*(((x_3-x_2)**3/6))],[(x_3-x_1),(x_3-x_2)]])
 #Matrix of the result of the cross product of multiplyers and the forces matrix
-yresult = np.array([(2.03 - (1/E*I)*(q/24)*(x_2-x_3) -(x_3-x_2)*((0.681*E*I+(q/24)*(x_1-x_2))/(x_1-x_2)))/(1/E*I),-(q*(l_a-x_3)**2/2-q*(x_3)**2/2)])
+yresult = np.array([(2.03 - (1/E*I)*((q/24)*(x_2-x_3) -(x_3-x_2)*((0.681*E*I+(q/24)*(x_1-x_2))/(x_1-x_2)))),-(q*(l_a-x_3)**2/2-q*(x_3)**2/2)])
 #Solving previous matrices to get the F_1Y and F_2Y
 FY12 = np.linalg.solve(ymulti,yresult)
 print (FY12)
