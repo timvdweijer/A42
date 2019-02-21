@@ -36,13 +36,15 @@ def coordinate(chord, radius, n_st):
     coordinatesy[9] = -1* radius
     
     
-    """ only plotting below except for return
-    """ 
-    plt.plot(coordinatesz, coordinatesy, 'ro')
-    plt.axis([max(coordinatesz)+.02, -.484 , -.2, .2])
-    plt.show()
-   
-    return (coordinatesy, coordinatesz)
+# =============================================================================
+#     """ only plotting below except for return
+#     """ 
+#     plt.plot(coordinatesz, coordinatesy, 'ro')
+#     plt.axis([max(coordinatesz)+.02, -.484 , -.2, .2])
+#     plt.show()
+#    
+# =============================================================================
+    return (coordinatesy, coordinatesz, l_straight, alpha)
 
 coordinate(constants.C_a, constants.h/2, constants.n_st)
     
