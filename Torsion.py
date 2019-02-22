@@ -55,7 +55,7 @@ now you can solve #see page 613 of Megson aircraft structures
 matrix [qcell_1, qcell_2]
 s_.. = distance of element / thickness
 """
-T = 1
+T = 1 ###########################################################################################change this for for loop
 area_1 = pi * (h/2)**2 /2
 area_2 = (C_a- h/2) * h
 s_semi = pi* h/2 / t_sk
