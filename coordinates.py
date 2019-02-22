@@ -31,8 +31,8 @@ def coordinate(chord, radius, n_st):
         elif (d_st* i-  d_st/2.) < (l_semi_circle + l_straight* 2.):
             coordinatesz[i + 1] = math.cos(alpha)* (l_straight - ((d_st * i - d_st/2) - (l_semi_circle + l_straight))) - (chord - radius)  #substract the (chord - radius semi-circle) of the aileron for z_coordinate with origin at hinge line
             coordinatesy[i + 1] = math.sin(alpha)* (l_straight - ((d_st * i - d_st/2) - (l_semi_circle + l_straight)))
-    coordinatesy[5] = radius
-    coordinatesy[9] = -1* radius
+    coordinatesy[5] = -1* radius
+    coordinatesy[9] = radius
     
     
 # =============================================================================
@@ -45,5 +45,7 @@ def coordinate(chord, radius, n_st):
 # =============================================================================
     return (coordinatesy, coordinatesz, l_straight, alpha)
 
-coordinate(constants.C_a, constants.h/2, constants.n_st)
-    
+a = coordinate(constants.C_a, constants.h/2, constants.n_st)
+
+print(a[1])
+print(a[0])
