@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 step=0.001
-x = np.arange(0, l_a+step, step)
+x = np.arange(1, l_a+step, step)
 R1v=1
 R1w=1
 R2v=1
@@ -28,7 +28,7 @@ Sy=q*np.cos(theta)*x-R1v*np.heaviside(x-x_1)-Ract1*np.heaviside(x-(x_2-(X_a/2)))
 Sz=-q*np.sin(theta)*x+R1w*np.heaviside(x-x_1)-Ract1*np.cos(theta)*np.heaviside(x-(x_2-x_a/2))+P*np.cos(theta)*np.heaviside(x-(x_2+x_a/2)+R2w*np.heaviside(x-x_2)+R3w*np.heaviside(x-x_3)
 
 #Moments
-#Mz=((-q*np.cos(theta))**2)*(x/2)+R1v*np.heaviside(x-x_1)*(x-x_1)+R2v*np.heaviside(x-x_2)*(x-x_2)+R3v*np.heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(theta)*np.heaviside(x-(x_2-X_a/2))*(x-(x_2-X_a/2))-P*np.sin(theta)*np.heaviside(x-(x_2+X_a/2))*(x-(x_2+X_a/2))
+Mz=((-q*np.cos(theta))**2)*(x/2)+R1v*np.heaviside(x-x_1)*(x-x_1)+R2v*np.heaviside(x-x_2)*(x-x_2)+R3v*np.heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(theta)*np.heaviside(x-(x_2-X_a/2))*(x-(x_2-X_a/2))-P*np.sin(theta)*np.heaviside(x-(x_2+X_a/2))*(x-(x_2+X_a/2))
 
 My=-((q*np.sin(theta))**2)*(x/2)+R1w*(x-x_1)*np.heaviside(x-x_1)+R2w*(x-x_2)*np.heaviside(x-x_2)+R3w*(x-x_3)*np.heaviside(x-x_3)+P*np.cos(theta)*(x-x_2+x_a/2)*np.heaviside(x-x_2+x_a/2)-React1*np.cos(theta)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))
 
