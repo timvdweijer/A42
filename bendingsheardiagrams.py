@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 step=0.001
-x = np.arange(0, l_a+step, step)
+x = np.arange(1, l_a+step, step)
 R1v=1
 R1w=1
 R2v=1
