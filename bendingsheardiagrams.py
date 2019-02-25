@@ -9,29 +9,46 @@ This is a temporary script file.
 import numpy as np
 from constants import * 
 import matplotlib.pyplot as plt
+import reactionforces
 
+
+def heaviside(x1):
+    if x1 < 0:
+        return 0
+    elif x1 >= 0:
+        return 1
+        
+    
 
 
 step=0.001
-x = np.arange(0, l_a+step, step)
-R1v=1
-R1w=1
-R2v=1
-R2w=1
-R3v=1
-R3w=1
-Ract1=1
 
+R1v= reactionforces.F_1V
+R1w=reactionforces.F_1W
+R2v=reactionforces.F_2V
+R2w=reactionforces.F_2W
+R3v=reactionforces.F_3V
+R3w=reactionforces.F_3W
+Ract1=reactionforces.F_act
+
+Sy=[]
+Sx=[]
+Sz=[]
+Mz=[]
+My=[]
+
+for x in np.arange(0, l_a+step, step):
 #Shear Forces
-Sy=q*np.cos(theta)*x-R1v*np.heaviside(x-x_1)-Ract1*np.heaviside(x-(x_2-(X_a/2)))-R2y*np.heaviside(x-x_2)+P*np.heaviside(x-(x_2+(X_a/2)))-R3y*np.heaviside(x-x_3)
+    Sy.append(q*np.cos(rad)*x-R1v*heaviside(x-x_1)-Ract1*np.sin(rad)*heaviside(x-(x_2-(x_a/2)))-R2v*heaviside(x-x_2)+P*heaviside(x-(x_2+(x_a/2)))-R3v*heaviside(x-x_3))
 
-Sz=-q*np.sin(theta)*x+R1w*np.heaviside(x-x_1)-Ract1*np.cos(theta)*np.heaviside(x-(x_2-x_a/2))+P*np.cos(theta)*np.heaviside(x-(x_2+x_a/2)+R2w*np.heaviside(x-x_2)+R3w*np.heaviside(x-x_3)
+    Sz.append(-q*np.sin(rad)*x+R1w*heaviside(x-x_1)-Ract1*np.cos(rad)*heaviside(x-(x_2-x_a/2))+P*np.cos(rad)*heaviside(x-(x_2+x_a/2))+R2w*heaviside(x-x_2)+R3w*heaviside(x-x_3))
 
 #Moments
-Mz=((-q*np.cos(theta))**2)*(x/2)+R1v*np.heaviside(x-x_1)*(x-x_1)+R2v*np.heaviside(x-x_2)*(x-x_2)+R3v*np.heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(theta)*np.heaviside(x-(x_2-X_a/2))*(x-(x_2-X_a/2))-P*np.sin(theta)*np.heaviside(x-(x_2+X_a/2))*(x-(x_2+X_a/2))
+    Mz.append((-1*(q * np.cos(rad))**2)*(x/2)+R1v*heaviside(x-x_1)*(x-x_1)+R2v*heaviside(x-x_2)*(x-x_2)+R3v*heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
-My=-((q*np.sin(theta))**2)*(x/2)+R1w*(x-x_1)*np.heaviside(x-x_1)+R2w*(x-x_2)*np.heaviside(x-x_2)+R3w*(x-x_3)*np.heaviside(x-x_3)+P*np.cos(theta)*(x-x_2+x_a/2)*np.heaviside(x-x_2+x_a/2)-React1*np.cos(theta)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))
+    My.append(((q*np.sin(rad))**2)*(x/2)+R1w*(x-x_1)*heaviside(x-x_1)+R2w*(x-x_2)*heaviside(x-x_2)+R3w*(x-x_3)*heaviside(x-x_3)-P*np.cos(rad)*(x-x_2+x_a/2)*heaviside(x-x_2+x_a/2)+Ract1*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2)))
 
+x = np.arange(0, l_a+step, step)
 #Torque
 
 #Deflections
@@ -39,10 +56,11 @@ My=-((q*np.sin(theta))**2)*(x/2)+R1w*(x-x_1)*np.heaviside(x-x_1)+R2w*(x-x_2)*np.
 #plots
 plt.figure(1)
 plt.subplot(211)
-plt.plot(x, Sy, 'S-y', x, Sz, 'S-z')
+plt.plot(x, Sy, x, Sz)
 
 plt.subplot(212)
-plt.plot(x, My , 'M-y', x, Mz, 'S-z')
+plt.axis()
+plt.plot(x, My, x, Mz)
 plt.show()
 
 
