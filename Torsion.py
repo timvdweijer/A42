@@ -73,7 +73,7 @@ for i in range(0, len(T)):                                  #for all x as before
     q_T.append([q1_T, q2_T])  
 
 
-
+d_theta = (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep
 def_theta = []                                              #deflection in terms of theta
 def_theta.append( (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep) #p.613 formula megson where lstep = dz                                             #deflection theta
 for i in range(1, len(q_T[:])):
