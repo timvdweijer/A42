@@ -1,18 +1,23 @@
 #import everything
 import numpy as np
+import constants
+import MoI_non_idealized
+import coordinates
+import normal_stress
 
 
-
-def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstress,n_step):        # ( stringer area, skin thickness, spar thickness,
-                                                                                                    # distance between stringers, spar length, distance between
-                                                                                                    # stringer 5 and spar, distance between stringer 6 and spar,
-                                                                                                    # normalstress array, number of steps along x-axis aileron
-
+def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstress,n_step):        
+    """  ( stringer area, skin thickness, spar thickness,
+        distance between stringers, spar length, distance between
+        stringer 5 and spar, distance between stringer 6 and spar,
+        normalstress array, number of steps along x-axis aileron
+        """
     j = 0
     B = np.zeros(normalstress.shape)
+
     while j < n_step:
 
-
+        print ()
         for i in range(4):
             B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
         for i in range(11,14):
@@ -41,5 +46,7 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
 
     return B
 
-print(boomarea(5,2,3,4,4.5,1,3,np.array([[1,7,3,4,5,6,7,8,-7,-6,-5,-4,-3,-2,-1],[6,5,4,3,2,1,0.5,6,7,8,-7,-6,-5,-4,-3]]),2))        #example for two spanwise steps and random properties
+#print(boomarea(5,2,3,4,4.5,1,3,np.array([[1,7,3,4,5,6,7,8,-7,-6,-5,-4,-3,-2,-1],[6,5,4,3,2,1,0.5,6,7,8,-7,-6,-5,-4,-3]]),2))        #example for two spanwise steps and random properties
+d_boom5spar = coordinates.a
+ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), np.array(normal_stress.norm_stress[0]), len(normal_stress.norm_stress[1]))
 

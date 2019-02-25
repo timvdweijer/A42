@@ -20,7 +20,7 @@ inertialterm_y = - (Sy * Iyy - Sz * Izy) / (Izz * Iyy - Izy ** 2)
 
 #boomclassification:
 class boomclass:
-     def __init__(self, classification):
+     def __init__(self, classification, area, ycoordinate, zcoordinate):
          self.boomclass = classification
          
          boom_number[0] = boomclass('noncircular')
@@ -62,6 +62,8 @@ force_in_yII=[]
 for i in range(14)
         directionvector.append([(coordinatez(i)-coordinatez(i-1),coordinatez(i)-coordinatez(i-1)))
         totaldirection.append(math.sqrt((directionvector[i][0])**2+(directionvector[i][1])**2))
+        
+
         
 
         
