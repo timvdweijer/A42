@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 Calculation of the torsion due to Fact, P and q around hinge 2 check if that's okay
 these are split up in the u,v,w components of the'new' reference frame
 """
-Fact = 39266.8813654578 ################################################################import right value and sign
+
+Fact = 39730.36831382 ################################################################import right value and sign
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
@@ -79,6 +80,10 @@ for i in range(1, len(q_T[:])):
     d_theta_torque = (q_T[i][0]* (s_semi+s_rib) - q_T[i][1]*s_rib)/(2*area_1*G) * lstep #p.613 formula megson where lstep = dz
     def_theta.append(d_theta_torque + def_theta[i-1])
 
-plt.plot(xx, q_T[:][0], xx, q_T[:][1]) ######################## beginning is at the end, not good
+# =============================================================================
+# plt.plot(xx, q_T[:][0], xx, q_T[:][1]) ######################## beginning is at the end, not good
+# plt.show()
+# =============================================================================
+
+plt.plot(xx, def_theta)
 plt.show()
-    
