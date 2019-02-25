@@ -44,7 +44,7 @@ for x in np.arange(0, l_a+step, step):
     Sz.append(-q*np.sin(rad)*x-R1w*heaviside(x-x_1)-Ract1*np.cos(rad)*heaviside(x-(x_2-x_a/2))+P*np.cos(rad)*heaviside(x-(x_2+x_a/2))-R2w*heaviside(x-x_2)-R3w*heaviside(x-x_3))
 
 #Moments
-    My.append((q*np.sin(rad))*((x**2)/2)+R1w*(x-x_1)*heaviside(x-x_1)+R2w*(x-x_2)*heaviside(x-x_2)+R3w*(x-x_3)*heaviside(x-x_3)-P*np.cos(rad)*(x-x_2+x_a/2)*heaviside(x-x_2+x_a/2)+Ract1*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2)))
+    My.append((q*np.sin(rad))*((x**2)/2)+R1w*(x-x_1)*heaviside(x-x_1)+Ract1*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))+R2w*(x-x_2)*heaviside(x-x_2)-P*np.cos(rad)*(x-(x_2+x_a/2))*heaviside(x-(x_2+x_a/2))+R3w*(x-x_3)*heaviside(x-x_3))
     
     Mz.append(-1*(q * np.cos(rad))*((x**2)/2)+R1v*heaviside(x-x_1)*(x-x_1)+R2v*heaviside(x-x_2)*(x-x_2)+R3v*heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
@@ -57,7 +57,7 @@ x = np.arange(0, l_a+step, step)
 #plots
 plt.figure(1)
 plt.subplot(211)
-plt.plot(x, Sy, x, Sz)
+plt.plot(x, Sy)
 
 plt.subplot(212)
 plt.axis()
