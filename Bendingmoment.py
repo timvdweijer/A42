@@ -6,7 +6,7 @@ This is a temporary script file.
 """
 import numpy as np
 import constants 
-
+import matplotlib.pyplot as plt
 
 step=0.001
 x = np.arange(0, constants.l_a+step, step)
@@ -23,11 +23,12 @@ Rz3=3
 Mz=(-(constants.q**2)*(x)/2)+Ry1*np.heaviside(x,constants.x_1)*(x-constants.x_1)
 +Ry2*np.heaviside(x,constants.x_2)*(x-constants.x_2)+Ry3*np.heaviside(x,constants.x_3)*(x-constants.x_3)
 
-print  (Mz)
+print  ("Mz is", Mz)
 
 My=(-(constants.q**2)*(x)/2)+Ry1*np.heaviside(x,constants.x_1)*(x-constants.x_1)
 +Ry2*np.heaviside(x,constants.x_2)*(x-constants.x_2)+Ry3*np.heaviside(x,constants.x_3)*(x-constants.x_3)
 
-print  (Mz)
+print  ("My is", My)
 
-
+plt.plot(x, Mz)
+plt.show()
