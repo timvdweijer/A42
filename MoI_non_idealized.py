@@ -36,6 +36,8 @@ num_lst.append(2*constants.t_sk*math.sqrt((constants.h*0.5)**2+(constants.C_a-co
                math.sqrt((constants.h*0.5)**2+(constants.C_a-constants.h*0.5)**2)*0.5*(-1)*math.cos(math.atan2(constants.h*0.5,constants.C_a-constants.h*0.5))) #contribution of straight parts
 den_lst.append(constants.t_sk*math.sqrt((constants.h*0.5)**2+(constants.C_a-constants.h*0.5)**2))
 
+den_lst.append(constants.t_sp*constants.h)
+
 centroid_y = 0
 centroid_z = sum(num_lst)/sum(den_lst)
 
