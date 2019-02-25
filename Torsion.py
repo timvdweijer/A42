@@ -9,12 +9,16 @@ from constants import *
 import numpy as np
 import coordinates
 import matplotlib.pyplot as plt
+import reactionforces 
+
+
 
 """
 Calculation of the torsion due to Fact, P and q around hinge 2 check if that's okay
 these are split up in the u,v,w components of the'new' reference frame
 """
-Fact = 39266.8813654578 ################################################################import right value and sign
+
+Fact = reactionforces.F_act
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
@@ -46,10 +50,8 @@ for i in np.nditer(x):
         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
         T.append(Tq + T[int(i*1000) - 1])
         xx.append(i)
-# =============================================================================
-# plt.plot(xx,T)
-# plt.show()
-# =============================================================================
+plt.plot(xx,T)
+plt.show()
 
 """
 find shear flow due to torsion; cell 1 is semicircular part, cell2 is TE
@@ -72,13 +74,19 @@ for i in range(0, len(T)):                                  #for all x as before
     q_T.append([q1_T, q2_T])  
 
 
-
+d_theta = (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep
 def_theta = []                                              #deflection in terms of theta
 def_theta.append( (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep) #p.613 formula megson where lstep = dz                                             #deflection theta
 for i in range(1, len(q_T[:])):
     d_theta_torque = (q_T[i][0]* (s_semi+s_rib) - q_T[i][1]*s_rib)/(2*area_1*G) * lstep #p.613 formula megson where lstep = dz
     def_theta.append(d_theta_torque + def_theta[i-1])
 
-plt.plot(xx, q_T[:][0], xx, q_T[:][1]) ######################## beginning is at the end, not good
-plt.show()
-    
+# =============================================================================
+# plt.plot(xx, q_T[:][0], xx, q_T[:][1]) ######################## beginning is at the end, not good
+# plt.show()
+# =============================================================================
+
+# =============================================================================
+# plt.plot(xx, def_theta)
+# plt.show()
+# =============================================================================

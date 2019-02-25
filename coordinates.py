@@ -34,6 +34,7 @@ def coordinate(chord, radius, n_st):
     coordinatesy[5] = -1* radius
     coordinatesy[9] = radius
     
-    return (coordinatesy, coordinatesz, l_straight, alpha)
+    return (coordinatesy, coordinatesz, l_straight, alpha, d_st)
 
-#a = coordinate(constants.C_a, constants.h/2, constants.n_st)
+a = coordinate(constants.C_a, constants.h/2, constants.n_st)
+d = math.sqrt((a[1][5] - a[1][4])**2 + (a[0][5] - a[0][4])**2)
