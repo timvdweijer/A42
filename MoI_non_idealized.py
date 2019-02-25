@@ -41,20 +41,29 @@ centroid_z = sum(num_lst)/sum(den_lst)
 
 #Moments of Inertia ABOUT CENTROID
 
+ycog= ((constants.h_st+constants.t_st/2)*constants.t_st*constants.w_st + constants.h_st* 2 * constants.t_st/2)/A_st
+
+I_yy_st =  (constants.t_st**3 * constants.h_st)/12 + (constants.w_st**3 * constants.t_st)/12     #assumptions: stringers 1-6 and 8-13 are assumed to be parallel with the chord
+I_zz_st =  constants.t_st * constants.h_st * (ycog - constants.h_st/2)**2 + (constants.t_st * constants.h_st**3)/12 + constants.t_st * constants.w_st * (constants.h_st + constants.t_st/2 - ycog)**2 + constants.t_st**3 * constants.w_st/12
+
+#I_yy
+
 I_yy_lst = []
 for i in range(n_st):
     I_yy_lst.append(A_st*(stringers[i].zcoord-centroid_z)**2)   #only steiner term, ask
-Iyy_stringers = sum(I_yy_lst)
+Iyy_stringers = sum(I_yy_lst) + 12 * I_yy_st + I_zz_st
 Iyy_skin =   2*((constants.t_sk*l_straight**3 * (math.cos(math.radians(constants.theta) - alpha))**2 )/12 + 
                        constants.t_sk* l_straight* (-(math.cos(math.radians(constants.theta) - alpha)* l_straight/2)- centroid_z)**2) #moment of inertia of straights_skin (moment of inertia under angle + steiner)*2 as upper and lower are the exact same
 Iyy_spar = constants.t_sp * constants.h * (0- centroid_z)**2 #spar only consists of steiner term due to thin walled assumption
 Iyy_semicircle = math.pi * (constants.h /2)**3 *constants.t_sk / 2 + (math.pi*constants.h / 2 *constants.t_sk) * (constants.h/math.pi - centroid_z)**2 #circular section see page 489 for equation and ask tim   https://www.engineering.com/Library/ArticlesPage/tabid/85/ArticleID/109/Centroids-of-Common-Shapes.aspx
 I_yy = Iyy_stringers + Iyy_skin + Iyy_spar + Iyy_semicircle
 
+#I_zz
+
 I_zz_lst = []
 for i in range(n_st):
     I_zz_lst.append(A_st*(stringers[i].ycoord-centroid_y)**2)   #only steiner term, ask
-Izz_stringers = sum(I_zz_lst)
+Izz_stringers = sum(I_zz_lst) + 12 * I_zz_st + I_yy_st
 Izz_skin = 2*((constants.t_sk*l_straight**3 * (math.sin(math.radians(constants.theta) - alpha))**2 )/12 + 
                        constants.t_sk* l_straight* (math.sin(math.radians(constants.theta) - alpha)* l_straight/2)**2) #moment of inertia of straights_skin (moment of inertia under angle + steiner)*2 as upper and lower are the exact same
 Izz_spar= (constants.t_sp * constants.h**3) / 12 #spar
