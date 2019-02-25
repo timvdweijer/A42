@@ -36,4 +36,4 @@ def coordinate(chord, radius, n_st):
     
     return (coordinatesy, coordinatesz, l_straight, alpha)
 
-#a = coordinate(constants.C_a, constants.h/2, constants.n_st)
+a = coordinate(constants.C_a, constants.h/2, constants.n_st)
