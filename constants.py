@@ -7,7 +7,7 @@ Created on Mon Feb 18 16:40:05 2019
 
 #Known Forces 
 P = 37.9*10**3      #F_act2 [N]
-q = 2.71*10**3      #Aerodynamic loac [N/m]
+q = 2.71*10**3      #Aerodynamic load [N/m]
 
 #Known Variables
 C_a = 0.484             #chord length [m]
