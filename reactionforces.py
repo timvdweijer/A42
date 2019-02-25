@@ -8,8 +8,9 @@ import numpy as np
 #import boomarea
 from constants import *
 import math as m
+from MoI_non_idealized import I_yy, I_zz, I_zy
 #a = boomarea.coordinates
-I = 0.00001
+
 rad = m.radians(theta)
 #Unkown Reaction Forces
 #F_1Y
@@ -72,12 +73,12 @@ yresult = np.array([[-((q*m.cos(rad))*l_a + (-P*m.sin(rad)))], \
                    [-((q*m.cos(rad))*(0.25*C_a-h/2)*l_a + (-P*m.sin(rad))*(h/2) - (-P*m.cos(rad))*(h/2))], \
                    [-(q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 - (-P*m.cos(rad))*(x_a/2))], \
                    [-((q*m.cos(rad))*(l_a-x_2)**2/2-(q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
-                   [(d_1*m.cos(rad))*(-E*I)-(-(q*m.cos(rad))*(x_1)**4/24)], \
-                   [0*(-E*I)-(-(q*m.cos(rad))*(x_2)**4/24)], \
-                   [(d_3*m.cos(rad))*(-E*I)-((-(q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6))], \
-                   [(d_1*m.sin(rad))*(-E*I)-(q*m.sin(rad)*(x_1)**4/24)], \
-                   [0*(-E*I)-(q*m.sin(rad)*(x_2)**4/24)], \
-                   [(d_3*m.sin(rad))*(-E*I)-((q*m.sin(rad)*(x_3)**4/24)-(-P*m.cos(rad))*((x_3-(x_2+(x_a/2))**3)/6))]])
+                   [(d_1*m.cos(rad))*(-E*I_zz)-(-(q*m.cos(rad))*(x_1)**4/24)], \
+                   [0*(-E*I_zz)-(-(q*m.cos(rad))*(x_2)**4/24)], \
+                   [(d_3*m.cos(rad))*(-E*I_zz)-((-(q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6))], \
+                   [(d_1*m.sin(rad))*(-E*I_yy)-(q*m.sin(rad)*(x_1)**4/24)], \
+                   [0*(-E*I_yy)-(q*m.sin(rad)*(x_2)**4/24)], \
+                   [(d_3*m.sin(rad))*(-E*I_yy)-((q*m.sin(rad)*(x_3)**4/24)-(-P*m.cos(rad))*((x_3-(x_2+(x_a/2))**3)/6))]])
 # #Solving previous matrices to get the F_1Y and F_2Y
 FY12 = np.linalg.solve(ymulti,yresult)
 
