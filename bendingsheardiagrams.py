@@ -90,4 +90,4 @@ plt.show()
 
 #9 unknowns: Ry1, Ry2, Ry3, Rz1, Rz2, Rz3, Ract1, K1, K2
 #9 equations: SumFy, SumFz, SumMz, SumMy, Eqn7, Eqn8, Eqn9
-      
+
