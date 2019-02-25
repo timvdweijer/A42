@@ -25,7 +25,7 @@ def normalstress(My, Mz, Iyy, Izz, y_coordinate, z_coordinate, centroid_y, centr
         stress_lst.append(local_stresses)   
     return(stress_lst, My)
 
-norm_stress = normalstress(bendingsheardiagrams.x, bendingsheardiagrams.x,\
+norm_stress = normalstress(bendingsheardiagrams.My, bendingsheardiagrams.Mz,\
                  MoI_non_idealized.I_yy, MoI_non_idealized.I_zz, \
                  coordinates.a[0], coordinates.a[1], 
                  MoI_non_idealized.centroid_y, MoI_non_idealized.centroid_z,\

@@ -36,6 +36,7 @@ Sx=[]
 Sz=[]
 Mz=[]
 My=[]
+rad = np.radians(theta)
 
 for x in np.arange(0, l_a+step, step):
 #Shear Forces
