@@ -16,8 +16,6 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
     B = np.zeros(normalstress.shape)
 
     while j < n_step:
-
-        print ()
         for i in range(4):
             B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
         for i in range(11,14):
@@ -37,16 +35,12 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
         for i in range(8,9):
             B[j][i] = A_stringer + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
     #spar
-        for i in range(7,8):
+        for i in range(5,6):
             B[j][i] = ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][9] / normalstress[j][5])
         for i in range(9,10):
             B[j][i] = ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][5] / normalstress[j][9])
-
         j += 1
-
     return B
 
-#print(boomarea(5,2,3,4,4.5,1,3,np.array([[1,7,3,4,5,6,7,8,-7,-6,-5,-4,-3,-2,-1],[6,5,4,3,2,1,0.5,6,7,8,-7,-6,-5,-4,-3]]),2))        #example for two spanwise steps and random properties
-d_boom5spar = coordinates.a
-ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), np.array(normal_stress.norm_stress[0]), len(normal_stress.norm_stress[1]))
+ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
 
