@@ -30,27 +30,27 @@ F_2U = 0.
 # #Equations, note that it is in u (x') v(y') w(z')
 # #F_1V       F_1W                        F_act                                   F_2V            F_2W        F_3V            F_3W        C1      C2      C3      C4      Knowns                                                                                                      =
 # #EQ1
-# F_1V                                    +(m.sin(rad))*F_act                     +F_2V                       +F_3V                                                       +(q*m.cos(rad))*l_a + (-P*m.sin(rad))                                                                       = 0
+# F_1V                                    +(m.sin(rad))*F_act                     +F_2V                       +F_3V                                                       +(-q*m.cos(rad))*l_a + (-P*m.sin(rad))                                                                       = 0
 # #EQ2
 #             F_1W                        +(m.cos(rad))*F_act                                     +F_2W                       +F_3W                                       +q*m.sin(rad)*l_a + (-P*m.cos(rad))                                                                         = 0
 # #EQ3
-# -(d_1*m.sin(rad))*F_1V  -(d_1*m.cos(rad))*F_1W    +((h/2)*(m.sin(rad))-(h/2)*(m.cos(rad)))*F_act            -(d_3*m.sin(rad))*F_3V  -(d_3*m.cos(rad))*F_3W              +(q*m.cos(rad))*(0.25*C_a-h/2)*l_a + (-P*m.sin(rad))*(h/2) - (-P*m.cos(rad))*(h/2)                          = 0
+# -(d_1*m.sin(rad))*F_1V  -(d_1*m.cos(rad))*F_1W    +((h/2)*(m.sin(rad))-(h/2)*(m.cos(rad)))*F_act            -(d_3*m.sin(rad))*F_3V  -(d_3*m.cos(rad))*F_3W              +(-q*m.cos(rad))*(0.25*C_a-h/2)*l_a + (-P*m.sin(rad))*(h/2) - (-P*m.cos(rad))*(h/2)                          = 0
 # #EQ4
-#             (x_2-x_1)*F_1W              +(x_a/2)*(m.cos(rad))*F_act                                                         -(x_3-x_2)*F_3W                             q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 - (-P*m.cos(rad))*(x_a/2)                               = 0
+#             (x_2-x_1)*F_1W              +(x_a/2)*(m.cos(rad))*F_act                                                         -(x_3-x_2)*F_3W                             +q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 - (-P*m.cos(rad))*(x_a/2)                               = 0
 # #EQ5
-# -(x_2-x_1)*F_1V                         -(x_a/2)*(m.sin(rad))*F_act                                          (x_3-x_2)*F_3V                                             (q*m.cos(rad))*(l_a-x_2)**2/2-(q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2)                           = 0 
+# -(x_2-x_1)*F_1V                         -(x_a/2)*(m.sin(rad))*F_act                                          (x_3-x_2)*F_3V                                             (-q*m.cos(rad))*(l_a-x_2)**2/2-(-q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2)                           = 0 
 # #EQ6
-#                                                                                                                                         C1*x_1  +C2                     -(q*m.cos(rad))*(x_1)**4/24                                                                                 = (d_1*m.cos(rad))*(-E*I)
+#                                                                                                                                         C1*x_1  +C2                     -(-q*m.cos(rad))*(x_1)**4/24                                                                                 = (d_1*m.cos(rad))*(-E*I)
 # #EQ7
-# -((x_2-x_1)**3/6)*F_1V                  -((x_2-(x_2-(x_a/2))**3)/6)*(m.sin(rad))*F_act                                                  C1*x_2  +C2                     -(q*m.cos(rad))*(x_2)**4/24                                                                                 = d_2v*(-E*I)
+# -((x_2-x_1)**3/6)*F_1V                  -((x_2-(x_2-(x_a/2))**3)/6)*(m.sin(rad))*F_act                                                  C1*x_2  +C2                     -(-q*m.cos(rad))*(x_2)**4/24                                                                                 = d_2v*(-E*I)
 # #EQ8
-# -((x_3-x_1)**3/6)*F_1V                  -((x_3-(x_2-(x_a/2))**3)/6)*(m.sin(rad))*F_act      -((x_3-x_2)**3/6)*F_2V                      C1*x_3  +C2                     (-(q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6)                                    = (d_3*m.cos(rad))*(-E*I)
+# -((x_3-x_1)**3/6)*F_1V                  -((x_3-(x_2-(x_a/2))**3)/6)*(m.sin(rad))*F_act      -((x_3-x_2)**3/6)*F_2V                      C1*x_3  +C2                     +(-(-q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6)                                    = (d_3*m.cos(rad))*(-E*I)
 # #EQ9
-#                                                                                                                                                         C3*x_1  +C4     q*m.sin(rad)*(x_1)**4/24                                                                                    = (d_1*m.sin(rad))*(-E*I)
+#                                                                                                                                                         C3*x_1  +C4     +q*m.sin(rad)*(x_1)**4/24                                                                                    = (d_1*m.sin(rad))*(-E*I)
 # #EQ10
-#              ((x_2-x_1)**3/6)*F_1W      ((x_2-(x_2-(x_a/2))**3)/6)*(m.cos(rad))*F_act                                                                   C3*x_2  +C4     q*m.sin(rad)*(x_2)**4/24                                                                                    = d_2w*(-E*I)
+#              ((x_2-x_1)**3/6)*F_1W      +((x_2-(x_2-(x_a/2))**3)/6)*(m.cos(rad))*F_act                                                                   C3*x_2  +C4     +q*m.sin(rad)*(x_2)**4/24                                                                                    = d_2w*(-E*I)
 # #EQ11
-#              ((x_3-x_1)**3/6)*F_1W      ((x_3-(x_2-(x_a/2))**3)/6)*(m.cos(rad))*F_act      ((x_3-x_2)**3/6)*F_2W                                        C3*x_3  +C4     (q*m.sin(rad)*(x_3)**4/24)-(-P*m.cos(rad))*((x_3-(x_2+(x_a/2))**3)/6)                                       = (d_3*m.sin(rad))*(-E*I)
+#              ((x_3-x_1)**3/6)*F_1W      +((x_3-(x_2-(x_a/2))**3)/6)*(m.cos(rad))*F_act      +((x_3-x_2)**3/6)*F_2W                                        C3*x_3  +C4     +(q*m.sin(rad)*(x_3)**4/24)-(-P*m.cos(rad))*((x_3-(x_2+(x_a/2))**3)/6)                                       = (d_3*m.sin(rad))*(-E*I)
 # =============================================================================
 
 
@@ -68,14 +68,14 @@ ymulti = np.array([[1,                       0,                          (m.sin(
                   [0,                       ((x_2-x_1)**3/6),           ((x_2-(x_2-(x_a/2))**3)/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
                   [0,                       ((x_3-x_1)**3/6),           ((x_3-(x_2-(x_a/2))**3)/6)*(m.cos(rad)),    0,                  ((x_3-x_2)**3/6),   0,                  0,                  0,      0,  x_3,    1]])
 # #Matrix of the result of the cross product of multiplyers and the forces matrix
-yresult = np.array([[-((q*m.cos(rad))*l_a + (-P*m.sin(rad)))], \
+yresult = np.array([[-((-q*m.cos(rad))*l_a + (-P*m.sin(rad)))], \
                    [-(q*m.sin(rad)*l_a + (-P*m.cos(rad)))], \
-                   [-((q*m.cos(rad))*(0.25*C_a-h/2)*l_a + (-P*m.sin(rad))*(h/2) - (-P*m.cos(rad))*(h/2))], \
+                   [-((-q*m.cos(rad))*(0.25*C_a-h/2)*l_a + (-P*m.sin(rad))*(h/2) - (-P*m.cos(rad))*(h/2))], \
                    [-(q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 - (-P*m.cos(rad))*(x_a/2))], \
-                   [-((q*m.cos(rad))*(l_a-x_2)**2/2-(q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
-                   [(d_1*m.cos(rad))*(-E*I_zz)-(-(q*m.cos(rad))*(x_1)**4/24)], \
-                   [0*(-E*I_zz)-(-(q*m.cos(rad))*(x_2)**4/24)], \
-                   [(d_3*m.cos(rad))*(-E*I_zz)-((-(q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6))], \
+                   [-((-q*m.cos(rad))*(l_a-x_2)**2/2-(-q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
+                   [(d_1*m.cos(rad))*(-E*I_zz)-(-(-q*m.cos(rad))*(x_1)**4/24)], \
+                   [0*(-E*I_zz)-(-(-q*m.cos(rad))*(x_2)**4/24)], \
+                   [(d_3*m.cos(rad))*(-E*I_zz)-((-(-q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2))**3)/6))], \
                    [(d_1*m.sin(rad))*(-E*I_yy)-(q*m.sin(rad)*(x_1)**4/24)], \
                    [0*(-E*I_yy)-(q*m.sin(rad)*(x_2)**4/24)], \
                    [(d_3*m.sin(rad))*(-E*I_yy)-((q*m.sin(rad)*(x_3)**4/24)-(-P*m.cos(rad))*((x_3-(x_2+(x_a/2))**3)/6))]])
