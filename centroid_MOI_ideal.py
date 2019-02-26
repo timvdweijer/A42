@@ -1,8 +1,6 @@
 import numpy as np
 import boom_area
 import coordinates
-#import rest
-
 
 def centroid(boomarea, z_pos, n_step):
 
@@ -26,7 +24,7 @@ def centroid(boomarea, z_pos, n_step):
         i += 1
     return centroid_y_pos, centroid_z_pos
 
-c = centroid(boom_area.ppp,coordinates.a[1],1961)
+c = centroid(boom_area.boomareas,coordinates.a[1], len())
 
 
 def i_yy(n_booms, boomarea, centroid_z_pos, boom_z_pos, n_step):
@@ -51,7 +49,7 @@ def i_yy(n_booms, boomarea, centroid_z_pos, boom_z_pos, n_step):
 
     return i_yy
 
-iyy = i_yy(15,boom_area.ppp,c[1],coordinates.a[1],1961)
+iyy = i_yy(15,boom_area.booomareas,c[1],coordinates.a[1],1691)
 
 
 def i_zz(n_booms, boomarea, centroid_y_pos, boom_y_pos, n_step):
@@ -76,4 +74,4 @@ def i_zz(n_booms, boomarea, centroid_y_pos, boom_y_pos, n_step):
 
     return i_zz
 
-izz = i_zz(15,boom_area.ppp,c[0],coordinates.a[0],1961)
+izz = i_zz(15,boom_area.boomareas,c[0],coordinates.a[0],1961)

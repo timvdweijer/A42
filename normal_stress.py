@@ -13,6 +13,7 @@ import numpy as np
 def normalstress(My, Mz, Iyy, Izz, y_coordinate, z_coordinate, centroid_y, centroid_z, n_stringers):
     stress_lst = np.zeros((len(My),15))
 
+
     for i in range(0, len(My)):
         #local_stresses = []
         for j in range(0, n_stringers + 2):
@@ -30,4 +31,3 @@ norm_stress = normalstress(bendingsheardiagrams.My, bendingsheardiagrams.Mz,\
                  coordinates.a[0], coordinates.a[1], 
                  MoI_non_idealized.centroid_y, MoI_non_idealized.centroid_z,\
                  constants.n_st)    
-print(norm_stress)
