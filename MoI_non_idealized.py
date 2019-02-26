@@ -71,3 +71,12 @@ print ("The total moment of inertia (zz) is: ", I_zz, "m^4")
 
 I_zy = 0
 
+I_yy_desired = 6.947*10**-5
+I_zz_desired = 5.697*10**-6
+
+I_yy_off = (I_yy-I_yy_desired)/I_yy_desired*100
+I_zz_off= (I_zz-I_zz_desired)/I_zz_desired*100
+
+
+print ("You are ", I_yy_off, "% off for Iyy" )
+print ("You are ", I_zz_off, "% off for Izz" )
