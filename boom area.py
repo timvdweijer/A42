@@ -16,8 +16,6 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
     B = np.zeros(normalstress.shape)
 
     while j < n_step:
-
-        print ()
         for i in range(4):
             B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
         for i in range(11,14):
@@ -41,11 +39,13 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
             B[j][i] = ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][9] / normalstress[j][5])
         for i in range(9,10):
             B[j][i] = ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][5] / normalstress[j][9])
-
         j += 1
-
     return B
 
+<<<<<<< HEAD
+=======
+ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
+>>>>>>> 617227774d6b16a1cdabc8e820c84e9501f020f3
 
 ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
 
