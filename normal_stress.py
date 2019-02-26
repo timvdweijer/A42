@@ -12,8 +12,6 @@ import numpy as np
 
 def normalstress(My, Mz, Iyy, Izz, y_coordinate, z_coordinate, centroid_y, centroid_z, n_stringers):
     stress_lst = np.zeros((len(My),15))
-    My.tolist()
-    Mz.tolist()
 
     for i in range(0, len(My)):
         #local_stresses = []

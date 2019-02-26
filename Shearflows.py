@@ -18,10 +18,13 @@ import matplotlib.pyplot as plt
 #qs = q_b+q_s0
 
 #assuming the boom areas will come in a list, with every row being a position along the x axis, and every column a particular boom
+#assuming the boom distances will come in a table, with for each column being a boom, one row giving the y coord from the centroid, and one row giving the z coord, and that these are independant of the x coord
+
 i = 0
 for i in len(boomarea):
     j = 0
     for j in range(boomarea):
+        dq = 
         q_b = (-Sy[j]/Izz)*
     
 
