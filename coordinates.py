@@ -17,7 +17,8 @@ def coordinate(chord, radius, n_st):
     alpha = math.atan2(radius, chord - radius  )                                #calculate angle of straight line of aileron
     coordinatesz = [0] * int(n_st +2)                                           #add 2 for rib booms
     coordinatesy = [0] * int(n_st +2)
-       
+    beta_lst = []                                                               #solely added for the calculation of the shear centre    
+    
     for i in range(1, constants.n_st + 1):                                      #start at stringer number 1
         if (d_st* i-  d_st/2.) < l_straight:
             coordinatesz[i - 1] = math.cos(alpha)* (d_st * i -  d_st/2.) - (chord - radius)  #substract the (chord - radius semi-circle) of the aileron for z_coordinate with origin at hinge line
@@ -28,13 +29,24 @@ def coordinate(chord, radius, n_st):
             beta = (d_st*i - d_st* j - (l_straight - end_straight_length)) / (radius) 
             coordinatesz[i ] = math.sin((beta)) * radius
             coordinatesy[i ] = - math.cos((beta)) * radius
+            beta_lst.append(beta)
         elif (d_st* i-  d_st/2.) < (l_semi_circle + l_straight* 2.):
             coordinatesz[i + 1] = math.cos(alpha)* (l_straight - ((d_st * i - d_st/2) - (l_semi_circle + l_straight))) - (chord - radius)  #substract the (chord - radius semi-circle) of the aileron for z_coordinate with origin at hinge line
             coordinatesy[i + 1] = math.sin(alpha)* (l_straight - ((d_st * i - d_st/2) - (l_semi_circle + l_straight)))
     coordinatesy[5] = -1* radius
     coordinatesy[9] = radius
     
-    return (coordinatesy, coordinatesz, l_straight, alpha, d_st)
+    distance_lst = []                                                           #empty list to store distances between 2 booms
+    for i in range(0, len(coordinatesy)-1):
+        if i < 5 or i >=8:                                                      #distance calculation between booms; needed for shear centre; straight part
+            distance_lst.append(math.sqrt( (coordinatesy[i + 1] - coordinatesy[i])**2 +  (coordinatesz[i + 1] - coordinatesz[i])**2))
+        elif i >= 5 and i < 8:                                                  #semi_circular part
+            if i == 5:
+                distance_lst.append((beta_lst[i-5]) * radius)
+            else: 
+                distance_lst.append(((beta_lst[i-5] - beta_lst[i - 6]) * radius))
+
+    return (coordinatesy, coordinatesz, l_straight, alpha, d_st, distance_lst)
 
 a = coordinate(constants.C_a, constants.h/2, constants.n_st)
 d = math.sqrt((a[1][5] - a[1][4])**2 + (a[0][5] - a[0][4])**2)
