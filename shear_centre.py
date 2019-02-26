@@ -23,7 +23,7 @@ cell II compute base shear flow
             d_q_ij_lst.append(d_q_ij)
         else:
             d_q_ij_lst.append(d_q_ij + d_q_ij_lst[-1])
-    print (len(d_q_ij_lst))
+    print (d_q_ij_lst)
 # =============================================================================
 #         if i <=5:
 #             d_q_ij =   boomarea[i] / Izz * coordinatesy[i]
