@@ -17,28 +17,58 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
 
     while j < n_step:
         for i in range(4):
-            B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d) / 6) * (2)
         for i in range(11,14):
-            B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d) / 6) * (2)
         for i in range(14,15):
-            B[j][i] = A_stringer + ((t_skin * d) / 6) * (2 + normalstress[j][0] / normalstress[j][i]) + ((t_skin * d) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2 + normalstress[j][0] / normalstress[j][i]) + ((t_skin * d) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d) / 6) * (2)
         for i in range(7,8):
-            B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin*d)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d) / 6) * (2)
     # booms next to spar (short side)
         for i in range(4,5):
-            B[j][i] = A_stringer + ((t_skin*d_boom5spar)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin*d_boom5spar)/6) * (2 + normalstress[j][i+1]/normalstress[j][i]) + ((t_skin*d)/6) * (2 + normalstress[j][i-1]/normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d_boom5spar) / 6) * (2) + ((t_skin * d) / 6) * (2)
         for i in range(10,11):
-            B[j][i] = A_stringer + ((t_skin*d) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin*d) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d_boom5spar) / 6) * (2)
     #booms next to spar (long side)
         for i in range(6,7):
-            B[j][i] = A_stringer + ((t_skin * d) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d) / 6) * (2) + ((t_skin * d_boom6spar) / 6) * (2)
         for i in range(8,9):
-            B[j][i] = A_stringer + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            if normalstress[j][i] != 0:
+                B[j][i] = A_stringer + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_skin * d) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i])
+            else:
+                B[j][i] = A_stringer + ((t_skin * d_boom6spar) / 6) * (2) + ((t_skin * d) / 6) * (2)
     #spar
         for i in range(5,6):
-            B[j][i] = ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][9] / normalstress[j][5])
+            if normalstress[j][i] != 0:
+                B[j][i] = ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][9] / normalstress[j][5])
+            else:
+                B[j][i] = ((t_skin * d_boom5spar) / 6) * (2) + ((t_skin * d_boom6spar) / 6) * (2) + ((t_spar * l_spar) / 6) * (2)
         for i in range(9,10):
-            B[j][i] = ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][5] / normalstress[j][9])
+            if normalstress[j][i] != 0:
+                B[j][i] = ((t_skin * d_boom6spar) / 6) * (2 + normalstress[j][i - 1] / normalstress[j][i]) + ((t_skin * d_boom5spar) / 6) * (2 + normalstress[j][i + 1] / normalstress[j][i]) + ((t_spar * l_spar) / 6) * (2 + normalstress[j][5] / normalstress[j][9])
+            else:
+                B[j][i] = ((t_skin * d_boom6spar) / 6) * (2) + ((t_skin * d_boom5spar) / 6) * (2) + ((t_spar * l_spar) / 6) * (2)
         j += 1
     return B
 
