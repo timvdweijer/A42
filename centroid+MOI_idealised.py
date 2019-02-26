@@ -24,6 +24,8 @@ def centroid(boomarea, z_pos, n_step):
         i += 1
     return centroid_y_pos, centroid_z_pos
 
+centroid()
+
 
 def i_yy(n_booms, boomarea, centroid_z_pos, boom_z_pos, n_step):
 
