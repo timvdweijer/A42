@@ -18,6 +18,8 @@ def heaviside(x1):
     elif x1 >= 0:
         return 1
 
+step=0.001
+x = np.arange(1, l_a+step, step)
 
 
 R1v= reactionforces.F_1V
@@ -27,6 +29,7 @@ R2w=reactionforces.F_2W
 R3v=reactionforces.F_3V
 R3w=reactionforces.F_3W
 Ract1=reactionforces.F_act
+
 
 Sy=[]
 Sx=[]

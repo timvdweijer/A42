@@ -42,5 +42,9 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
         j += 1
     return B
 
+
 ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
 
+#ppp = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
+
+print(ppp)
