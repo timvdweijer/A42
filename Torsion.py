@@ -58,39 +58,37 @@ Fact_w: no sign modification is needed because of direction ---> other sign for 
 #         q_v * (-1 * (0.25*C_a - h/2.) - shearloc_z) +\
 #     -1* q_w * (shearloc_y))
 # =============================================================================
-    T = []
-for x in np.arange(0, l_a+step, step):
-    T.append(\
-        Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) +\
-        Fact_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 - x_a / 2.))) +\     
-        P_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 + x_a / 2.))) +\     
-    -1* P_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 + x_a / 2.))) +\     
-        q_v * (-1 * (0.25*C_a - h/2.))\
-               )
-
-T = []                                                      #create empty list for torque, the zero is to d
-xx =[]                                                      #create empty list for x_positions, the zero is to d
-for i in np.nditer(x):
-    if i == 0:
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
-        T.append(Tq)                                        
-        xx.append(i)
-    elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
-        Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
-        T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
-        xx.append(i)
-    elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
-        TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
-        T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
-        xx.append(i)
-    else:
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
-        T.append(Tq + T[int(i*1000) - 1])
-        xx.append(i)
-plt.plot(xx,T)
-plt.show()
+T = []
+xx = []
+for x in np.arange(0, l_a+lstep, lstep):
+    T.append(-1*Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + Fact_w * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + P_v * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) - P_w * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) +  q_v * x* (-1 * (0.25*C_a - h/2.)))
+    xx.append(x*1000)
+plt.plot(xx ,T)
+# =============================================================================
+# T = []                                                      #create empty list for torque, the zero is to d
+# xx =[]                                                      #create empty list for x_positions, the zero is to d
+# for i in np.nditer(x):
+#     if i == 0:
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
+#         T.append(Tq)                                        
+#         xx.append(i)
+#     elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
+#         Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
+#         T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
+#         xx.append(i)
+#     elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
+#         TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
+#         T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
+#         xx.append(i)
+#     else:
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
+#         T.append(Tq + T[int(i*1000) - 1])
+#         xx.append(i)
+# plt.plot(xx,T)
+# plt.show()
+# =============================================================================
 
 """
 find shear flow due to torsion; cell 1 is semicircular part, cell2 is TE
