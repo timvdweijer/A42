@@ -21,6 +21,7 @@ d = np.zeros((3196,4))
 for line in lines:
     if not line[0] == '*':
         a.append(line)
+        print(line)
         if len(a) > 3195:       # make a list 'a' containing a string of the x,y and z coordinates for each node (3196 nodes)
             break
 for j in range(len(a)):
