@@ -93,7 +93,7 @@ C1 = FY12[7]
 C2 = FY12[8]
 C3 = FY12[9]
 C4 = FY12[10]
-print (F_1V, F_1W, F_act, F_2V, F_2W, F_3V, F_3W)
+#print (F_1V, F_1W, F_act, F_2V, F_2W, F_3V, F_3W)
 
 
 

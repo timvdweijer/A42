@@ -9,7 +9,7 @@ from constants import *
 import numpy as np
 import coordinates
 import matplotlib.pyplot as plt
-import reactionforces 
+from reactionforces import *
 
 
 
@@ -17,42 +17,75 @@ import reactionforces
 Calculation of the torsion due to Fact, P and q around hinge 2 check if that's okay
 these are split up in the u,v,w components of the'new' reference frame
 """
+def heaviside(x):
+    if x < 0:
+        return 0
+    elif x >= 0:
+        return 1
 
-Fact = reactionforces.F_act
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
 P_w = cos(theta_r) * -1* P                                  #z_component of P
 P_v = sin(theta_r) * P                                      #y_component of P
-Fact_w = cos(theta_r) * -1* Fact                            #z_component of jammed actuator
-Fact_v = sin(theta_r) * Fact                                #y_component of jammed actuator
+Fact_w = cos(theta_r) * -1* F_act                            #z_component of jammed actuator
+Fact_v = sin(theta_r) * F_act                                #y_component of jammed actuator
+
 
 lstep = .001                                                #define spanwise step
-x = np.arange(0, l_a+lstep, lstep)                         #create array of x points spanwise
-T = []                                                      #create empty list for torque, the zero is to d
-xx =[]                                                      #create empty list for x_positions, the zero is to d
-for i in np.nditer(x):
-    if i == 0:
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
-        T.append(Tq)                                        
-        xx.append(i)
-    elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
-        Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
-        T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
-        xx.append(i)
-    elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
-        TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
-        T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
-        xx.append(i)
-    else:
-        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
-        T.append(Tq + T[int(i*1000) - 1])
-        xx.append(i)
-plt.plot(xx,T)
-plt.show()
+x = np.arange(0, l_a + lstep, lstep)                        #create array of x points spanwise
+"""
+if F_1V is in positive y direction, and shearloc_y is negative from reference frame--> negative location, no sign modification needed as pitch down is positve moment
+same principle upholds for F_1W  but now sign modification is needed
+Fact_v: moment is negative due to direction of F act, sign modification needed ----> other sign for P as it has opporite vector
+Fact_w: no sign modification is needed because of direction ---> other sign for P
+"""
 
+T = []
+for x in np.arange(0, l_a+step, step):
+    T.append(\
+        F_1V * shearloc_z* (heaviside(x-x_1)) +\      
+    -1* F_1W * shearloc_y* (heaviside(x-x_1)) +\            
+        F_2V * shearloc_z* (heaviside(x-x_2)) +\
+    -1* F_2W * shearloc_y* (heaviside(x-x_2)) +\
+        F_3V * shearloc_z* (heaviside(x-x_3)) +\
+    -1* F_3W * shearloc_y* (heaviside(x-x_3)) +\
+    -1* Fact_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 - x_a / 2.))) +\
+        Fact_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 - x_a / 2.))) +\     
+        P_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 + x_a / 2.))) +\     
+    -1* P_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 + x_a / 2.))) +\     
+        q_v * (-1 * (0.25*C_a - h/2.) - shearloc_z) +\
+    -1* q_w * (shearloc_y))
+    
+    
+# =============================================================================
+# T = []                                                      #create empty list for torque, the zero is to d
+# xx =[]                                                      #create empty list for x_positions, the zero is to d
+# for i in np.nditer(x):
+#     if i == 0:
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
+#         T.append(Tq)                                        
+#         xx.append(i)
+#     elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
+#         Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
+#         T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
+#         xx.append(i)
+#     elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
+#         TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
+#         T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
+#         xx.append(i)
+#     else:
+#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
+#         T.append(Tq + T[int(i*1000) - 1])
+#         xx.append(i)
+# # =============================================================================
+# =============================================================================
+# plt.plot(xx,T)
+# plt.show()
+# 
+# =============================================================================
 """
 find shear flow due to torsion; cell 1 is semicircular part, cell2 is TE
 deflection cell 1 = deflection cell 2 

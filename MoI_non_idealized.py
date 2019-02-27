@@ -52,9 +52,11 @@ ycog= (((constants.h_st+constants.t_st/2)*constants.t_st*constants.w_st) + (cons
 I_yy_st =  (((constants.t_st**3) * constants.h_st)/12) + ((constants.w_st**3) * constants.t_st)/12     #assumptions: stringers 1-6 and 8-13 are assumed to be parallel with the chord
 I_zz_st =  constants.t_st * constants.h_st * (ycog - constants.h_st/2)**2 + (constants.t_st * constants.h_st**3)/12 + constants.t_st * constants.w_st * (constants.h_st + constants.t_st/2 - ycog)**2 + constants.t_st**3 * constants.w_st/12
 
-print(I_yy_st*(10**12))
-print(I_zz_st)
-
+# =============================================================================
+# print(I_yy_st*(10**12))
+# print(I_zz_st)
+# 
+# =============================================================================
 
 #I_yy
 
@@ -70,7 +72,9 @@ I_yy = Iyy_stringers + Iyy_skin + Iyy_spar + Iyy_semicircle
 
 #print ("Distance straight: ", (-(math.cos(math.radians(constants.theta) - alpha)* l_straight/2)- centroid_z))
 
-print ("The total moment of inertia (yy) is: ", I_yy, "m^4")
+# =============================================================================
+# print ("The total moment of inertia (yy) is: ", I_yy, "m^4")
+# =============================================================================
 
 #I_zz
 
@@ -83,7 +87,9 @@ Izz_skin = 2*(constants.t_sk*l_straight**3 * (math.sin(alpha)**2 )/12 +
 Izz_spar= (constants.t_sp * constants.h**3) / 12 #spar
 Izz_semicircle = math.pi * (constants.h /2)**3 *constants.t_sk / 2 #circular section see page 489 for equation
 I_zz = Izz_stringers + Izz_skin + Izz_spar + Izz_semicircle
-print ("The total moment of inertia (zz) is: ", I_zz, "m^4")
+# =============================================================================
+# print ("The total moment of inertia (zz) is: ", I_zz, "m^4")
+# =============================================================================
 
 I_zy = 0
 
@@ -95,8 +101,10 @@ I_yy_off = (I_yy-I_yy_desired)/I_yy_desired*100
 I_zz_off= (I_zz-I_zz_desired)/I_zz_desired*100
 I_yy_off_am = (I_yy-I_yy_zonder_centroid/I_yy_zonder_centroid)*100
 I_yy_ver = (I_yy-I_yy_zonder_centroid)/I_yy_zonder_centroid*100
-
-print ("You are ", I_yy_off, "% off for Iyy" )
-print ("You are ", I_zz_off, "% off for Izz" )
-print ("You are ", I_yy_off_am, "%off for Iyy if the centroid is assumed to be at spar")
-print ("You are ", I_yy_ver, "% off for Iyy" )
+# =============================================================================
+# 
+# print ("You are ", I_yy_off, "% off for Iyy" )
+# print ("You are ", I_zz_off, "% off for Izz" )
+# print ("You are ", I_yy_off_am, "%off for Iyy if the centroid is assumed to be at spar")
+# print ("You are ", I_yy_ver, "% off for Iyy" )
+# =============================================================================
