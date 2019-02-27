@@ -59,29 +59,29 @@ F_2U = 0.
 
 # #Matrix of the multiplyers of F_1Y and F_2Y
                    #F_1V                    F_1W                        F_act                                       F_2V                F_2W                F_3V                F_3W                C1      C2  C3      C4 
-ymulti = np.array([[1,                       0,                          (m.sin(rad)),                               1,                  0,                  1,                  0,                  0,      0,  0,      0], \
-                  [0,                       1,                          (m.cos(rad)),                               0,                  1,                  0,                  1,                  0,      0,  0,      0], \
-                  [-((-d_1*m.sin(rad))),    (d_1*m.cos(rad)),          -((h/2)*(m.sin(rad))-(h/2)*(m.cos(rad))),    0,                  0,                  -(-(d_3*m.sin(rad))),  (d_3*m.cos(rad)),  0,      0,  0,      0], \
+ymulti = np.array([[1,                      0,                          m.sin(rad),                                 1,                  0,                  1,                  0,                  0,      0,  0,      0], \
+                  [0,                       1,                          m.cos(rad),                                 0,                  1,                  0,                  1,                  0,      0,  0,      0], \
+                  [d_1*m.sin(rad),          d_1*m.cos(rad),             -(h/2)*(m.sin(rad))+(h/2)*(m.cos(rad)),     0,                  0,                  d_3*m.sin(rad),     d_3*m.cos(rad),     0,      0,  0,      0], \
                   [0,                       (x_2-x_1),                  (x_a/2)*(m.cos(rad)),                       0,                  0,                  0,                  -(x_3-x_2),         0,      0,  0,      0], \
                   [-(x_2-x_1),              0,                          -(x_a/2)*(m.sin(rad)),                      0,                  0,                  (x_3-x_2),          0,                  0,      0,  0,      0], \
                   [0,                       0,                          0,                                          0,                  0,                  0,                  0,                  x_1,    1,  0,      0], \
                   [-((x_2-x_1)**3/6),       0,                          -((x_2-(x_2-(x_a/2)))**3/6)*(m.sin(rad)),   0,                  0,                  0,                  0,                  x_2,    1,  0,      0], \
                   [-((x_3-x_1)**3/6),       0,                          -((x_3-(x_2-(x_a/2)))**3/6)*(m.sin(rad)),   -((x_3-x_2)**3/6),  0,                  0,                  0,                  x_3,    1,  0,      0], \
                   [0,                       0,                          0,                                          0,                  0,                  0,                  0,                  0,      0,  x_1,    1], \
-                  [0,                       ((x_2-x_1)**3/6),           ((x_2-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
-                  [0,                       ((x_3-x_1)**3/6),           ((x_3-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  ((x_3-x_2)**3/6),   0,                  0,                  0,      0,  x_3,    1]])
+                  [0,                       (x_2-x_1)**3/6,             ((x_2-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
+                  [0,                       (x_3-x_1)**3/6,             ((x_3-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  (x_3-x_2)**3/6,     0,                  0,                  0,      0,  x_3,    1]]) 
 # #Matrix of the result of the cross product of multiplyers and the forces matrix
 yresult = np.array([[q*m.cos(rad)*l_a + P*m.sin(rad)], \
                    [-q*m.sin(rad)*l_a + P*m.cos(rad)], \
-                   [-((q*m.cos(rad))*(-(0.25*C_a-h/2))*l_a - (-P*m.sin(rad))*(h/2) + (-P*m.cos(rad))*(h/2))], \
-                   [-(q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 + (-P*m.cos(rad))*(x_a/2))], \
-                   [-((-q*m.cos(rad))*(l_a-x_2)**2/2-(-q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
-                   [(d_1*m.cos(rad))*(-E*I_zz)-(-(-q*m.cos(rad))*(x_1)**4/24)], \
-                   [0*(-E*I_zz)-(-(-q*m.cos(rad))*(x_2)**4/24)], \
-                   [(d_3*m.cos(rad))*(-E*I_zz)-((-(-q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2)))**3)/6)], \
-                   [((-d_1*m.sin(rad)))*(-E*I_yy)-(q*m.sin(rad)*(x_1)**4/24)], \
+                   [q*m.cos(rad)*(0.25*C_a-h/2)*l_a - P*m.sin(rad)*(h/2) + P*m.cos(rad)*(h/2)], \
+                   [-q*m.sin(rad)*(x_2**2/2)+q*m.sin(rad)*(l_a-x_2)**2/2 - P*m.cos(rad)*(x_a/2)], \
+                   [q*m.cos(rad)*(l_a-x_2)**2/2-q*m.cos(rad)*(x_2**2/2) + P*m.sin(rad)*(x_a/2)], \
+                   [d_1*m.cos(rad)*(-E*I_zz)-q*m.cos(rad)*(x_1)**4/24], \
+                   [0*(-E*I_zz)-q*m.cos(rad)*(x_2)**4/24], \
+                   [d_3*m.cos(rad)*(-E*I_zz)-q*m.cos(rad)*(x_3)**4/24 - P*m.sin(rad)*((x_3-(x_2+(x_a/2)))**3/6)], \
+                   [d_1*m.sin(rad)*(-E*I_yy)-q*m.sin(rad)*(x_1)**4/24], \
                    [0*(-E*I_yy)-(q*m.sin(rad)*(x_2)**4/24)], \
-                   [(-(d_3*m.sin(rad)))*(-E*I_yy)-((q*m.sin(rad)*(x_3)**4/24)+(-P*m.cos(rad))*((x_3-(x_2+(x_a/2)))**3/6))]])
+                   [d_3*m.sin(rad)*(-E*I_yy)-q*m.sin(rad)*(x_3)**4/24 + P*m.cos(rad)*((x_3-(x_2+(x_a/2)))**3/6)]])
 # #Solving previous matrices to get the F_1Y and F_2Y
 FY12 = np.linalg.solve(ymulti,yresult)
 

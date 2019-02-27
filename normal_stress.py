@@ -19,8 +19,7 @@ def normalstress(My, Mz, Iyy, Izz, y_coordinate, z_coordinate, centroid_y, centr
         for j in range(0, n_stringers + 2):
             y_tocentroid = centroid_y + y_coordinate[j]
             z_tocentroid = centroid_z + z_coordinate[j]
-            stress_boom = ((Mz[i]*Iyy)*(y_tocentroid) + (My[i]*Izz)*(z_tocentroid))  \
-                           / (Izz*Iyy)
+            stress_boom = ((Mz[i]*Iyy)*(y_tocentroid) + (My[i]*Izz)*(z_tocentroid))/ (Izz*Iyy)
             #local_stresses.append(stress_boom)
             stress_lst[i][j] = stress_boom
         #stress_lst.append(local_stresses)
