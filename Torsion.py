@@ -22,7 +22,7 @@ def heaviside(x):
         return 0
     elif x >= 0:
         return 1
-
+F_act = 39700
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
@@ -40,52 +40,58 @@ same principle upholds for F_1W  but now sign modification is needed
 Fact_v: moment is negative due to direction of F act, sign modification needed ----> other sign for P as it has opporite vector
 Fact_w: no sign modification is needed because of direction ---> other sign for P
 """
-
-T = []
+# =============================================================================
+# 
+# T = []
+# for x in np.arange(0, l_a+step, step):
+#     T.append(\
+#         F_1V * shearloc_z* (heaviside(x-x_1)) +\      
+#     -1* F_1W * shearloc_y* (heaviside(x-x_1)) +\            
+#         F_2V * shearloc_z* (heaviside(x-x_2)) +\
+#     -1* F_2W * shearloc_y* (heaviside(x-x_2)) +\
+#         F_3V * shearloc_z* (heaviside(x-x_3)) +\
+#     -1* F_3W * shearloc_y* (heaviside(x-x_3)) +\
+#     -1* Fact_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 - x_a / 2.))) +\
+#         Fact_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 - x_a / 2.))) +\     
+#         P_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 + x_a / 2.))) +\     
+#     -1* P_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 + x_a / 2.))) +\     
+#         q_v * (-1 * (0.25*C_a - h/2.) - shearloc_z) +\
+#     -1* q_w * (shearloc_y))
+# =============================================================================
+    T = []
 for x in np.arange(0, l_a+step, step):
     T.append(\
-        F_1V * shearloc_z* (heaviside(x-x_1)) +\      
-    -1* F_1W * shearloc_y* (heaviside(x-x_1)) +\            
-        F_2V * shearloc_z* (heaviside(x-x_2)) +\
-    -1* F_2W * shearloc_y* (heaviside(x-x_2)) +\
-        F_3V * shearloc_z* (heaviside(x-x_3)) +\
-    -1* F_3W * shearloc_y* (heaviside(x-x_3)) +\
-    -1* Fact_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 - x_a / 2.))) +\
+        Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) +\
         Fact_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 - x_a / 2.))) +\     
         P_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 + x_a / 2.))) +\     
     -1* P_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 + x_a / 2.))) +\     
-        q_v * (-1 * (0.25*C_a - h/2.) - shearloc_z) +\
-    -1* q_w * (shearloc_y))
-    
-    
-# =============================================================================
-# T = []                                                      #create empty list for torque, the zero is to d
-# xx =[]                                                      #create empty list for x_positions, the zero is to d
-# for i in np.nditer(x):
-#     if i == 0:
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
-#         T.append(Tq)                                        
-#         xx.append(i)
-#     elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
-#         Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
-#         T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
-#         xx.append(i)
-#     elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
-#         TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
-#         T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
-#         xx.append(i)
-#     else:
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
-#         T.append(Tq + T[int(i*1000) - 1])
-#         xx.append(i)
-# # =============================================================================
-# =============================================================================
-# plt.plot(xx,T)
-# plt.show()
-# 
-# =============================================================================
+        q_v * (-1 * (0.25*C_a - h/2.))\
+               )
+
+T = []                                                      #create empty list for torque, the zero is to d
+xx =[]                                                      #create empty list for x_positions, the zero is to d
+for i in np.nditer(x):
+    if i == 0:
+        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
+        T.append(Tq)                                        
+        xx.append(i)
+    elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
+        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
+        Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
+        T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
+        xx.append(i)
+    elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
+        TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
+        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
+        T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
+        xx.append(i)
+    else:
+        Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
+        T.append(Tq + T[int(i*1000) - 1])
+        xx.append(i)
+plt.plot(xx,T)
+plt.show()
+
 """
 find shear flow due to torsion; cell 1 is semicircular part, cell2 is TE
 deflection cell 1 = deflection cell 2 
