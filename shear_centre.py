@@ -19,9 +19,10 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
     """ 
     q_cellI = []
     q_cellII = []
-    for j in range(len(Sy)):
-        q_ij_lst_cellII = [0]
-        for i in range(0,11):                                                   #horizontal and vertical shear force contributions; split up as right beams has to be used
+
+    for j in range(0,len(Sy)):
+        q_ij_lst_cellII = []
+        for i in range(0,11 ):                                                   #horizontal and vertical shear force contributions; split up as right beams has to be used
             if i <=5:
                 d_q_ij =   - Sy[j] * boomarea[j][i] / Izz[j] * (coordinatesy[i] - centroidy[j]) \
                 - Sz[j] * boomarea[j][i] / Iyy[j] * (coordinatesz[i] - centroidz[j])                       
@@ -57,12 +58,14 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
     return (q_cellI, q_cellII )
         
 baseshear = base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, bendingsheardiagrams.Sz)
+shearcentre =  base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, np.zeros(np.shape(bendingsheardiagrams.Sz)))
 q_cellI = baseshear[0]  
 q_cellII = baseshear[1]
 coordinatesy = a[0]
 coordinatesz = a[1]
 mcoordinatesy = a[-2]
 mcoordinatesz = a[-1]
+
 
 #redundantshearflow:
 cellI=np.array([7,8,9,10,6])
