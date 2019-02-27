@@ -79,7 +79,7 @@ thickII[6]=t_sp
 
 
 enclosed_area_1 = (np.pi * (h/2)**2) /2                                     #enclosed areas of cell 1 
-enclosed_area_2 = (C_a- h/2) * h                                         #enclosed areas of cell 2 
+enclosed_area_2 = ((C_a- h/2) * h)/2                                         #enclosed areas of cell 2 
 
 
     #system of equations for qs0
@@ -112,22 +112,14 @@ for j in range(len(bendingsheardiagrams.Sy)):
         C12II.append(q_bIIforcez[i]*cellII_y[i]+q_bIIforcey[i]*cellII_z[i])
         C22II.append(q_bIIforce[i]/thickII[i])
         A22II.append(1/(2*enclosed_area_2*G)*(dst_II[i]/thickII[i]))
-    
-    print (A21I)
-    A=  [[((h/2)**2)*np.pi     ,2*(h/2)*(C_a-(h/2))] ,[[sum(A21I)]     ,[sum(A22II)]]]
-    C=  [[sum(C11I)+sum(C12II)], [sum(C12II)+sum(A22II)]]
+
+    A=  [[2* enclosed_area_1   , 2*enclosed_area_2] ,[sum(A21I) + (1/(2*enclosed_area_2*G)*(dst_II[6]/thickII[6])) ,-1*(sum(A22II)+ (1/(2*enclosed_area_1*G)*(dst_I[4]/thickI[4])))]]
+    C=  [[-1*(sum(C11I)+sum(C12II))], [-1*sum(C12II)/(2*enclosed_area_1*G)+sum(A22II)/(2*enclosed_area_2*G)]]
 
         
 
     redundant[j]= np.linalg.solve(A,C)
     redundant[j][0]=qs_0I[j]
     redundant[j][1]=qs_0II[j] 
-
-    q_totI[j]=[]
-    q_totII[j]=[]
-    for i in range 5:     
-        q_totI[j].append(q_cellI[i]+qs0I[j])
-    for i in range 11:
-        q_totII[j].append(q_cellII[i]+qs0II[j])
 
                                              
