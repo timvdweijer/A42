@@ -10,6 +10,7 @@ import numpy as np
 import coordinates
 import matplotlib.pyplot as plt
 from reactionforces import *
+from MoI_non_idealized import J
 
 
 
@@ -26,7 +27,7 @@ F_act = 39.72774618*1000
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = 0#sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
-P_w = cos(theta_r) * P                                  #z_component of P
+P_w = 0#cos(theta_r) * P                                  #z_component of P
 P_v = 0#sin(theta_r) * P                                      #y_component of P
 Fact_w = cos(theta_r) *  F_act                            #z_component of jammed actuator
 Fact_v = 0#sin(theta_r) * F_act                                #y_component of jammed actuator
@@ -63,7 +64,9 @@ xx = []
 for x in np.arange(0, l_a + lstep, lstep):
     T.append(-1*Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + Fact_w * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + P_v * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) - P_w * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) +  q_v * x* (-1 * (0.25*C_a - h/2.)))
     xx.append(x*1000)
-plt.plot(xx ,T)
+# =============================================================================
+# plt.plot(xx ,T)
+# =============================================================================
 # =============================================================================
 # T = []                                                      #create empty list for torque, the zero is to d
 # xx =[]                                                      #create empty list for x_positions, the zero is to d
@@ -122,8 +125,17 @@ def theta(q_T, lstep): #gives the angle at all location
         theta.append(d_theta_torque + theta[i-1])
     return (theta)
 
-theta_corrected = theta(q_T, lstep) - theta(q_T, lstep)[int(x_1 *1000)] #assume deflection is zero at hinge 1 
+theta_corrected = theta(q_T, lstep) - theta(q_T, lstep)[418] #assume deflection is zero at hinge 1 
+plt.plot(xx, theta_corrected)
+
 # =============================================================================
-# plt.plot(xx, theta_corrected)
+# def theta(q_T, lstep): #gives the angle at all location
+#     theta = [] 
+#     theta.append( (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep) #p.613 formula megson where lstep = dz                                                   #deflection in terms of theta                                            #deflection theta
+#     for i in range(1, len(q_T[:])):
+#         d_theta_torque = (q_T[i][0]* (s_semi+s_rib) - q_T[i][1]*s_rib)/(2*area_1*G) * lstep #p.613 formula megson where lstep = dz
+#         theta.append(d_theta_torque + theta[i-1])
+#     return (theta)
 # =============================================================================
+
 
