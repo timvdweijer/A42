@@ -17,8 +17,8 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
     """
     cell II compute base shear flow (straight part)
     """ 
-    q_cellI = []
-    q_cellII = []
+    q_cellI = [0]
+    q_cellII = [0]
 
     for j in range(0,len(Sy)):
         q_ij_lst_cellII = []
@@ -59,12 +59,7 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
         
 baseshear = base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, bendingsheardiagrams.Sz)
 shearcentre =  base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, np.zeros(np.shape(bendingsheardiagrams.Sz)))
-q_cellI = baseshear[0]  
-q_cellII = baseshear[1]
-coordinatesy = a[0]
-coordinatesz = a[1]
-mcoordinatesy = a[-2]
-mcoordinatesz = a[-1]
+
 
 
 #redundantshearflow:

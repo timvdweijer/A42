@@ -8,8 +8,11 @@ import numpy as np
 #import boomarea
 from constants import *
 import math as m
-from MoI_non_idealized import I_yy, I_zz, I_zy
+#from MoI_non_idealized import I_yy, I_zz, I_zy
 #a = boomarea.coordinates
+I_yy = 6.947E-05
+I_zz = 5.697E-06
+
 
 rad = m.radians(theta)
 #Unkown Reaction Forces
@@ -68,8 +71,8 @@ ymulti = np.array([[1,                       0,                          (m.sin(
                   [0,                       ((x_2-x_1)**3/6),           ((x_2-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
                   [0,                       ((x_3-x_1)**3/6),           ((x_3-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  ((x_3-x_2)**3/6),   0,                  0,                  0,      0,  x_3,    1]])
 # #Matrix of the result of the cross product of multiplyers and the forces matrix
-yresult = np.array([[-((-q*m.cos(rad))*l_a + (-P*m.sin(rad)))], \
-                   [-(q*m.sin(rad)*l_a + (-P*m.cos(rad)))], \
+yresult = np.array([[q*m.cos(rad)*l_a + P*m.sin(rad)], \
+                   [-q*m.sin(rad)*l_a + P*m.cos(rad)], \
                    [-((q*m.cos(rad))*(-(0.25*C_a-h/2))*l_a - (-P*m.sin(rad))*(h/2) + (-P*m.cos(rad))*(h/2))], \
                    [-(q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 + (-P*m.cos(rad))*(x_a/2))], \
                    [-((-q*m.cos(rad))*(l_a-x_2)**2/2-(-q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
