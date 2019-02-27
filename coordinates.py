@@ -17,7 +17,10 @@ def coordinate(chord, radius, n_st):
     alpha = math.atan2(radius, chord - radius  )                                #calculate angle of straight line of aileron
     coordinatesz = [0] * int(n_st +2)                                           #add 2 for rib booms
     coordinatesy = [0] * int(n_st +2)
-    beta_lst = []                                                               #solely added for the calculation of the shear centre    
+    mcoordinatesz = [0] * int(n_st +1)                                          #list for the coordinates of the middle of the skin segments
+    mcoordinatesy = [0] * int(n_st +1)
+    beta_lst = []                                                               #solely added for the calculation of the shear centre
+    mbeta = []                                                                  #list for betalist of middle locations of skin for shear     
     
     for i in range(1, constants.n_st + 1):                                      #start at stringer number 1
         if (d_st* i-  d_st/2.) < l_straight:
@@ -29,6 +32,10 @@ def coordinate(chord, radius, n_st):
             beta = (d_st*i - d_st* j - (l_straight - end_straight_length)) / (radius) 
             coordinatesz[i ] = math.sin((beta)) * radius
             coordinatesy[i ] = - math.cos((beta)) * radius
+            if len(beta_lst) == 0:
+                mbeta.append(beta/2)
+            else:
+                mbeta.append((beta - beta_lst[-1])/2 + beta_lst[-1])
             beta_lst.append(beta)
         elif (d_st* i-  d_st/2.) < (l_semi_circle + l_straight* 2.):
             coordinatesz[i + 1] = math.cos(alpha)* (l_straight - ((d_st * i - d_st/2) - (l_semi_circle + l_straight))) - (chord - radius)  #substract the (chord - radius semi-circle) of the aileron for z_coordinate with origin at hinge line
@@ -45,8 +52,29 @@ def coordinate(chord, radius, n_st):
                 distance_lst.append((beta_lst[i-5]) * radius)
             else: 
                 distance_lst.append(((beta_lst[i-5] - beta_lst[i - 6]) * radius))
-
-    return (coordinatesy, coordinatesz, l_straight, alpha, d_st, distance_lst)
+    
+    mbeta.append((math.radians(180) - beta_lst[-1])/2 + beta_lst[-1])      
+    for i in range(0, len(coordinatesy)-1):
+        if i <= 4 or i >= 9:
+            mcoordinatesz[i] = coordinatesz[i] + (coordinatesz[i + 1] - coordinatesz[i])/2
+            mcoordinatesy[i] = coordinatesy[i] + (coordinatesy[i + 1] - coordinatesy[i])/2           
+        else:
+            mcoordinatesz[i] = math.sin((mbeta[i - 5])) * radius
+            mcoordinatesy[i] = - math.cos((mbeta[i - 5])) * radius
+        
+    return (coordinatesy, coordinatesz, l_straight, alpha, d_st, distance_lst, mcoordinatesy, mcoordinatesz)
 
 a = coordinate(constants.C_a, constants.h/2, constants.n_st)
 d = math.sqrt((a[1][5] - a[1][4])**2 + (a[0][5] - a[0][4])**2)
+my = a[-2]
+mz = a[-1]
+distances = a[-3]
+
+cellII_z = [(constants.C_a - constants.h / 2), mz[0], mz[1], mz[2],mz[3], mz[4], 0., mz[9], mz[10], mz[11], mz[12], mz[13] ]
+cellII_y = [0. , my[0], my[1], my[2],my[3], my[4], 0., my[9], my[10], my[11], my[12], my[13] ]
+dst_II = [0. , distances[0], distances[1], distances[2],distances[3], distances[4], constants.h, distances[9], distances[10], distances[11], distances[12], distances[13] ]
+
+cellI_z = [mz[5], mz[6], mz[7], mz[8], 0.]
+cellI_y = [my[5], my[6], my[7], my[8], 0.]
+dst_I = [distances[5], distances[6] , distances[7], distances[8], constants.h]
+

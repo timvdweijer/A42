@@ -9,17 +9,20 @@ import numpy as np
 import boom_area
 from constants import h, C_a
 import centroid_MOI_ideal as cmi
+
 import itertools as it
+import bendingsheardiagrams
+from math import *
 
-
-def base_shear(coordinatesy, coordiantesz, Izz, Iyy, centroidy, centroidz, boomarea, Sy, Sz):
+def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, boomarea, Sy, Sz):
     """
     cell II compute base shear flow (straight part)
     """ 
+    q_cellI = []
     q_cellII = []
-    for j in range(0, len(Sy)):
+    for j in range(0,2): #len(Sy)):
         q_ij_lst_cellII = []
-        for i in range(0,11 ):                                                      #horizontal and vertical shear force contributions; split up as right beams has to be used
+        for i in range(0,11 ):                                                   #horizontal and vertical shear force contributions; split up as right beams has to be used
             if i <=5:
                 d_q_ij =   - Sy[j] * boomarea[j][i] / Izz[j] * (coordinatesy[i] - centroidy[j]) \
                 - Sz[j] * boomarea[j][i] / Iyy[j] * (coordinatesz[i] - centroidz[j])                       
@@ -41,19 +44,20 @@ def base_shear(coordinatesy, coordiantesz, Izz, Iyy, centroidy, centroidz, booma
                 d_q_ij =   - Sy[j] * boomarea[j][i + 6] / Izz[j] * (coordinatesy[i + 6] - centroidy[j]) \
                 - Sz[j] * boomarea[j][i + 6] / Iyy[j] * (coordinatesz[i + 6] - centroidz[j])                        
             else: 
-                d_q_ij =   - Sy[j] * boomarea[j][i + 3] / Izz[j] * (coordinatesy[i + 3] - centroidy[j]) \
-                - Sz[j] * boomarea[j][i + 3] / Iyy[j] * (coordinatesz[i + 3] - centroidz[j])
+                d_q_ij =   - Sy[j] * boomarea[j][5] / Izz[j] * (coordinatesy[5] - centroidy[j]) \
+                - Sz[j] * boomarea[j][5] / Iyy[j] * (coordinatesz[5] - centroidz[j])                
             
             if i == 0:                                                              #make list for the q's of the skin of that particular locations
                 q_ij_lst_cellI.append(d_q_ij)
             else:
-                q_ij_lst_cellI.append(d_q_ij + q_ij_lst_cellI[-1])          
+                q_ij_lst_cellI.append(d_q_ij + q_ij_lst_cellI[-1]) 
+        
         q_cellI.append(q_ij_lst_cellI)
         q_cellII.append(q_ij_lst_cellII)
         
     return (q_cellI, q_cellII )
         
-baseshear = base_shear(coordinates.a[0], coordinates.a[1], cmi. , , , , boom_area.boomareas, bendingsheardiagrams.Sy, bendingsheardiagrams.Sz)
+baseshear = base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, bendingsheardiagrams.Sz)
     
 
 #redundantshearflow:
@@ -70,6 +74,7 @@ thickI[4]=t_sp
 for i in it.chain((0,6), (7,12)):
     thikII[i]=t_sk
 thickII[6]=t_sp
+
 
 enclosed_area_1 = (pi * (h/2)**2) /2                                     #enclosed areas of cell 1 
 enclosed_area_2 = (C_a- h/2) * h                                         #enclosed areas of cell 2 

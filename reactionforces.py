@@ -93,7 +93,22 @@ C1 = FY12[7]
 C2 = FY12[8]
 C3 = FY12[9]
 C4 = FY12[10]
-print (F_1V, F_1W, F_act, F_2V, F_2W, F_3V, F_3W)
+#print (F_1V, F_1W, F_act, F_2V, F_2W, F_3V, F_3W)
+
+print ("Ry1 = ", F_1V/1000, "kN")
+print ("Ry2 = ", F_2V/1000, "kN")
+print ("Ry3 = ", F_3V/1000, "kN")
+print ("Rz1 = ", F_1W/1000, "kN")
+print ("Rz2 = ", F_2W/1000, "kN")
+print ("Rz3 = ", F_3W/1000, "kN")
+print ("Fact = ", F_act/1000, "kN")
+
+Fy_sum = F_1V+(m.sin(rad))*F_act  +F_2V +F_3V +(-q*m.cos(rad))*l_a + (-P*m.sin(rad)) 
+Fz_sum = F_1W +(m.cos(rad))*F_act +F_2W  +F_3W +q*m.sin(rad)*l_a + (-P*m.cos(rad))
+
+
+print ("Sum of y forces: ", Fy_sum)
+print ("Sum of z forces: ", Fz_sum)
 
 
 

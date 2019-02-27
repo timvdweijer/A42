@@ -12,7 +12,7 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
         stringer 5 and spar, distance between stringer 6 and spar,
         normalstress array, number of steps along x-axis aileron
         """
-    j = 0
+    j = 1
     B = np.zeros(normalstress.shape)
     '''
     while j < n_step:
