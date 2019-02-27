@@ -66,4 +66,15 @@ def coordinate(chord, radius, n_st):
 
 a = coordinate(constants.C_a, constants.h/2, constants.n_st)
 d = math.sqrt((a[1][5] - a[1][4])**2 + (a[0][5] - a[0][4])**2)
+my = a[-2]
+mz = a[-1]
+distances = a[-3]
+
+cellII_z = [(constants.C_a - constants.h / 2), mz[0], mz[1], mz[2],mz[3], mz[4], 0., mz[9], mz[10], mz[11], mz[12], mz[13] ]
+cellII_y = [0. , my[0], my[1], my[2],my[3], my[4], 0., my[9], my[10], my[11], my[12], my[13] ]
+dst_II = [0. , distances[0], distances[1], distances[2],distances[3], distances[4], constants.h, distances[9], distances[10], distances[11], distances[12], distances[13] ]
+
+cellI_z = [mz[5], mz[6], mz[7], mz[8], 0.]
+cellI_y = [my[5], my[6], my[7], my[8], 0.]
+dst_I = [distances[5], distances[6] , distances[7], distances[8], constants.h]
 
