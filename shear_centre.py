@@ -125,7 +125,7 @@ for j in range(len(bendingsheardiagrams.Sy)):
 
     q_totI[j]=[]
     q_totII[j]=[]
-    for i in range 5:     
+    for i in rangez 5:     
         q_totI[j].append(q_cellI[i]+qs0I[j])
     for i in range 11:
         q_totII[j].append(q_cellII[i]+qs0II[j])
