@@ -3,19 +3,13 @@ import boom_area
 import coordinates
 import bendingsheardiagrams as bsd
 
-def centroid(boomarea, z_pos, y_pos, n_step):
+def centroid(n_step):                   #for centroid of idealized structure, we assume the same centroid as for the non-idealized structure
 
-    '''boomarea is an array with dimensions(n_steps,n_booms)
-       z_pos is an array with dimensions(n_booms)
-       n_step is the number of iterations along the x-axis of the aileron'''
-
-
-    numlst_z = []
-    numlst_y = []
-    i = 0
-    B = boomarea
     centroid_z_pos = np.zeros(n_step)
     centroid_y_pos = np.zeros(n_step)
+    centroid_z_pos += -0.10756263838748933
+
+    '''
     while i < n_step:
         j = 0
         while j < len(boomarea[i]):
@@ -25,10 +19,12 @@ def centroid(boomarea, z_pos, y_pos, n_step):
             j += 1
         centroid_z_pos[i] = sum(numlst_z) / den
         centroid_y_pos[i] = sum(numlst_y) / den
-        i += 1
+        i += 1'''
+
+
     return centroid_y_pos, centroid_z_pos
 
-c = centroid(boom_area.boomareas,coordinates.a[1], coordinates.a[0], len(bsd.Sy))
+c = centroid(len(bsd.Sy))
 
 
 def i_yy(n_booms, boomarea, centroid_z_pos, boom_z_pos, n_step):
