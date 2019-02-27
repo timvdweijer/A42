@@ -19,7 +19,7 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
     """ 
     q_cellI = []
     q_cellII = []
-    for j in range(0,2): #len(Sy)):
+    for j in range(0,len(Sy)):
         q_ij_lst_cellII = []
         for i in range(0,11 ):                                                   #horizontal and vertical shear force contributions; split up as right beams has to be used
             if i <=5:
@@ -57,6 +57,7 @@ def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, booma
     return (q_cellI, q_cellII )
         
 baseshear = base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, bendingsheardiagrams.Sz)
+shearcentre =  base_shear(coordinates.a[0], coordinates.a[1], cmi.izz , cmi.iyy ,cmi.c[0] ,cmi.c[1] , boom_area.boomareas, bendingsheardiagrams.Sy, np.zeros(np.shape(bendingsheardiagrams.Sz)))
     
 
 # =============================================================================
