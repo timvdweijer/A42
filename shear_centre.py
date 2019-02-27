@@ -107,28 +107,32 @@ for j in range(len(bendingsheardiagrams.Sy)):
         q_bIforcez.append(q_bIforce[i]*np.absolute(coordinatesz[cellI[i]]-coordinatesz[cellI[i-1]]) / dst_I[i])  #decomposed zforces
         q_bIforcey.append(q_bIforce[i]*np.absolute(coordinatesy[cellI[i]]-coordinatesy[cellI[i-1]])/dst_I[i])  #decomposed yforces   
         C11I.append(q_bIforcez[i]*cellI_y[i]+q_bIforcey[i]*cellI_z[i])#moment of base shear flow
-        C21I=q_bIforce[i]/thickI[i]     
-        print (thickI[i])                                    
-        A21I=(1/(2*enclosed_area_1*G))*(dst_I[i]/thickI[i])
+        C21I.append(q_bIforce[i]/thickI[i])                                       
+        A21I.append((1/(2*enclosed_area_1*G))*(dst_I[i]/thickI[i]))
     
-    for i in range(12):
-        print (i)
+    for i in range(11):
         q_bIIforce.append(q_cellII[j][i]*dst_II[i])
         q_bIIforcez.append(q_bIIforce[i]*np.absolute(coordinatesz[cellII[i]]-coordinatesz[cellII[i-1]])/dst_II[i])
         q_bIIforcey.append(q_bIIforce[i]*np.absolute(coordinatesy[cellII[i]]-coordinatesy[cellII[i-1]])/dst_II[i])
         C12II.append(q_bIIforcez[i]*cellII_y[i]+q_bIIforcey[i]*cellII_z[i])
         C22II.append(q_bIIforce[i]/thickII[i])
         A22II.append(1/(2*enclosed_area_2*G)*(dst_II[i]/thickII[i]))
-
+    
+    print (A21I)
     A=  [[((h/2)**2)*np.pi     ,2*(h/2)*(C_a-(h/2))] ,[[sum(A21I)]     ,[sum(A22II)]]]
-    C=  [[sum(C11I)+sum(C21II)], [sum(C12II)+sum(A22II)]]
+    C=  [[sum(C11I)+sum(C12II)], [sum(C12II)+sum(A22II)]]
 
         
 
     redundant[j]= np.linalg.solve(A,C)
     redundant[j][0]=qs_0I[j]
     redundant[j][1]=qs_0II[j] 
-        
-        
 
-                                      
+    q_totI[j]=[]
+    q_totII[j]=[]
+    for i in range 5:     
+        q_totI[j].append(q_cellI[i]+qs0I[j])
+    for i in range 11:
+        q_totII[j].append(q_cellII[i]+qs0II[j])
+
+                                             
