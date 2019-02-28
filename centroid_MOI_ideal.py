@@ -2,13 +2,14 @@ import numpy as np
 import boom_area
 import coordinates
 import bendingsheardiagrams as bsd
+import MoI_non_idealized as Mni
 
 def centroid(boomarea, y_pos, z_pos ,n_step):                   #for centroid of idealized structure, we assume the same centroid as for the non-idealized structure
 
-    centroid_z_pos = np.zeros(n_step)
-    centroid_y_pos = np.zeros(n_step)
+    centroid_z_pos = np.ones(n_step) 
+    centroid_y_pos = np.ones(n_step)
 
-    i = 0
+    i = 1
     while i < n_step:
         numlst_z = []
         numlst_y = []
