@@ -8,11 +8,17 @@ import numpy as np
 #import boomarea
 from constants import *
 import math as m
-#from MoI_non_idealized import I_yy, I_zz, I_zy
+from MoI_non_idealized import I_yy, I_zz, I_zy
 #a = boomarea.coordinates
-I_yy = 6.947E-05
-I_zz = 5.697E-06
 
+#These are only used for verification
+#I_yy = 6.947E-05
+#I_zz = 5.697E-06
+
+
+#d_1 = 0
+#d_3 = 0
+#q = 0
 
 rad = m.radians(theta)
 #Unkown Reaction Forces
@@ -138,6 +144,32 @@ print ("You are ", Rz1_off, "% off for Rz1" )
 print ("You are ", Rz2_off, "% off for Rz2" )
 print ("You are ", Rz3_off, "% off for Rz3" )
 print ("You are ", F_act_off, "% off for F_act" )
+
+# =============================================================================
+#Testing differences with 0 deflection a no distributed load
+#Ry1_ver_0 = -5.1970404
+#Ry2_ver_0 = 2.750962268
+#Ry3_ver_0 = 2.446078132
+#Rz1_ver_0 = -10.6555119
+#Rz2_ver_0 = 5.640308506
+#Rz3_ver_0 = 5.01520339
+#F_act_ver_0 = 37.9
+
+#Ry1_off_0 = ((F_1V/1000)-Ry1_ver_0)/Ry1_ver_0*100
+#Ry2_off_0 = ((F_2V/1000)-Ry2_ver_0)/Ry2_ver_0*100
+#Ry3_off_0 = ((F_3V/1000)-Ry3_ver_0)/Ry3_ver_0*100
+#Rz1_off_0 = ((F_1W/1000)-Rz1_ver_0)/Rz1_ver_0*100
+#Rz2_off_0 = ((F_2W/1000)-Rz2_ver_0)/Rz2_ver_0*100
+#Rz3_off_0 = ((F_3W/1000)-Rz3_ver_0)/Rz3_ver_0*100
+#F_act_off_0 = ((F_act/1000)-F_act_ver_0)/F_act_ver_0*100
+
+#print ("You are ", Ry1_off_0, "% off for Ry1_0" )
+#print ("You are ", Ry2_off_0, "% off for Ry2_0" )
+#print ("You are ", Ry3_off_0, "% off for Ry3_0" )
+#print ("You are ", Rz1_off_0, "% off for Rz1_0" )
+#print ("You are ", Rz2_off_0, "% off for Rz2_0" )
+#print ("You are ", Rz3_off_0, "% off for Rz3_0" )
+#print ("You are ", F_act_off_0, "% off for F_act_0" )
 # =============================================================================
 # #Calculating reaction forces in Y
 # 

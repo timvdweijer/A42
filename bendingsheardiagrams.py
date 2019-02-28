@@ -52,7 +52,7 @@ Mz=[]
 My=[]
 
 rad = np.radians(theta)
-step=0.0001
+step=0.001
 for x in np.arange(0, l_a+step, step):
 #Shear Forces
     Sy.append(q*np.cos(rad)*x-R1v*heaviside(x-x_1)-Ract1*np.sin(rad)*heaviside(x-(x_2-(x_a/2)))-R2v*heaviside(x-x_2)+P*np.sin(rad)*heaviside(x-(x_2+(x_a/2)))-R3v*heaviside(x-x_3))
@@ -89,6 +89,7 @@ x = np.arange(0, l_a+step, step)
 
 
 plt.figure(1)
+
 plt.subplot(221)
 plt.plot(x, Sy, x, Sy_ut)
 
