@@ -39,14 +39,38 @@ print(xlist)
 ylist = []                      #list with y-coordinates of the nodes
 
 for l in range(3196):
-    ylist.append(d[k][2])
+    ylist.append(d[l][2])
 print(ylist)
 
 zlist = []                      #list with z-coordinates of the nodes
 
 for m in range(3196):
-    zlist.append(d[k][3])
+    zlist.append(d[m][3])
 print(zlist)
+
+#only for TE and LE
+
+xte = []
+yte = []
+zte = []
+
+
+for z in range(len(ylist)):
+    if ylist[z] == 0 and not zlist[z] == 0:
+        xte.append(xlist[z])
+        yte.append(ylist[z])
+        zte.append(zlist[z])
+
+#plot
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+fig = plt.figure()
+ax = Axes3D(fig)
+
+s = ax.scatter(xte,yte,zte)
+
+plt.show()
 
 
 

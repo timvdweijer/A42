@@ -57,15 +57,42 @@ x = np.arange(0, l_a+step, step)
 #Deflections
 
 #plots
-plt.figure(1)
-plt.subplot(211)
-plt.plot(x, Sy, x, Sz)
+# =============================================================================
+# plt.figure(1)
+# plt.subplot(211)
+# plt.plot(x, Sy, x, Sz)
+# 
+# plt.subplot(212)
+# plt.axis()
+# plt.plot(x, My, x, Mz)
+# plt.show()
+# 
 
-plt.subplot(212)
-plt.axis()
-plt.plot(x, My, x, Mz)
-plt.show()
 
+# =============================================================================
+
+# =============================================================================
+# 
+# plt.figure(1)
+# 
+# plt.subplot(221)
+# plt.plot(x, Sy, x, Sy_ut)
+# 
+# plt.subplot(222)
+# plt.axis()
+# plt.plot(x, My, x, My_ut)
+# 
+# plt.subplot(223)
+# plt.plot(x, Sz, x, Sz_ut)
+# 
+# plt.subplot(224)
+# plt.axis()
+# plt.plot(x, Mz, x, Mz_ut)
+# 
+# plt.show()
+# =============================================================================
+
+# =============================================================================
 
 #Force equilibrium
 #eqn1= R1x + R2x +R3x==0;

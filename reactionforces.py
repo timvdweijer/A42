@@ -8,11 +8,17 @@ import numpy as np
 #import boomarea
 from constants import *
 import math as m
-#from MoI_non_idealized import I_yy, I_zz, I_zy
+from MoI_non_idealized import I_yy, I_zz, I_zy
 #a = boomarea.coordinates
-I_yy = 6.947E-05
-I_zz = 5.697E-06
 
+#These are only used for verification
+#I_yy = 6.947E-05
+#I_zz = 5.697E-06
+
+
+#d_1 = 0
+#d_3 = 0
+#q = 0
 
 rad = m.radians(theta)
 #Unkown Reaction Forces
@@ -59,29 +65,29 @@ F_2U = 0.
 
 # #Matrix of the multiplyers of F_1Y and F_2Y
                    #F_1V                    F_1W                        F_act                                       F_2V                F_2W                F_3V                F_3W                C1      C2  C3      C4 
-ymulti = np.array([[1,                       0,                          (m.sin(rad)),                               1,                  0,                  1,                  0,                  0,      0,  0,      0], \
-                  [0,                       1,                          (m.cos(rad)),                               0,                  1,                  0,                  1,                  0,      0,  0,      0], \
-                  [-((-d_1*m.sin(rad))),    (d_1*m.cos(rad)),          -((h/2)*(m.sin(rad))-(h/2)*(m.cos(rad))),    0,                  0,                  -(-(d_3*m.sin(rad))),  (d_3*m.cos(rad)),  0,      0,  0,      0], \
+ymulti = np.array([[1,                      0,                          m.sin(rad),                                 1,                  0,                  1,                  0,                  0,      0,  0,      0], \
+                  [0,                       1,                          m.cos(rad),                                 0,                  1,                  0,                  1,                  0,      0,  0,      0], \
+                  [d_1*m.sin(rad),          d_1*m.cos(rad),             -(h/2)*(m.sin(rad))+(h/2)*(m.cos(rad)),     0,                  0,                  d_3*m.sin(rad),     d_3*m.cos(rad),     0,      0,  0,      0], \
                   [0,                       (x_2-x_1),                  (x_a/2)*(m.cos(rad)),                       0,                  0,                  0,                  -(x_3-x_2),         0,      0,  0,      0], \
                   [-(x_2-x_1),              0,                          -(x_a/2)*(m.sin(rad)),                      0,                  0,                  (x_3-x_2),          0,                  0,      0,  0,      0], \
                   [0,                       0,                          0,                                          0,                  0,                  0,                  0,                  x_1,    1,  0,      0], \
                   [-((x_2-x_1)**3/6),       0,                          -((x_2-(x_2-(x_a/2)))**3/6)*(m.sin(rad)),   0,                  0,                  0,                  0,                  x_2,    1,  0,      0], \
                   [-((x_3-x_1)**3/6),       0,                          -((x_3-(x_2-(x_a/2)))**3/6)*(m.sin(rad)),   -((x_3-x_2)**3/6),  0,                  0,                  0,                  x_3,    1,  0,      0], \
                   [0,                       0,                          0,                                          0,                  0,                  0,                  0,                  0,      0,  x_1,    1], \
-                  [0,                       ((x_2-x_1)**3/6),           ((x_2-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
-                  [0,                       ((x_3-x_1)**3/6),           ((x_3-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  ((x_3-x_2)**3/6),   0,                  0,                  0,      0,  x_3,    1]])
+                  [0,                       (x_2-x_1)**3/6,             ((x_2-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  0,                  0,                  0,                  0,      0,  x_2,    1], \
+                  [0,                       (x_3-x_1)**3/6,             ((x_3-(x_2-(x_a/2)))**3/6)*(m.cos(rad)),    0,                  (x_3-x_2)**3/6,     0,                  0,                  0,      0,  x_3,    1]]) 
 # #Matrix of the result of the cross product of multiplyers and the forces matrix
 yresult = np.array([[q*m.cos(rad)*l_a + P*m.sin(rad)], \
                    [-q*m.sin(rad)*l_a + P*m.cos(rad)], \
-                   [-((q*m.cos(rad))*(-(0.25*C_a-h/2))*l_a - (-P*m.sin(rad))*(h/2) + (-P*m.cos(rad))*(h/2))], \
-                   [-(q*m.sin(rad)*(x_2**2/2)-q*m.sin(rad)*(l_a-x_2)**2/2 + (-P*m.cos(rad))*(x_a/2))], \
-                   [-((-q*m.cos(rad))*(l_a-x_2)**2/2-(-q*m.cos(rad))*(x_2**2/2) + (-P*m.sin(rad))*(x_a/2))], \
-                   [(d_1*m.cos(rad))*(-E*I_zz)-(-(-q*m.cos(rad))*(x_1)**4/24)], \
-                   [0*(-E*I_zz)-(-(-q*m.cos(rad))*(x_2)**4/24)], \
-                   [(d_3*m.cos(rad))*(-E*I_zz)-((-(-q*m.cos(rad))*(x_3)**4/24)-(-P*m.sin(rad))*((x_3-(x_2+(x_a/2)))**3)/6)], \
-                   [((-d_1*m.sin(rad)))*(-E*I_yy)-(q*m.sin(rad)*(x_1)**4/24)], \
+                   [q*m.cos(rad)*(0.25*C_a-h/2)*l_a - P*m.sin(rad)*(h/2) + P*m.cos(rad)*(h/2)], \
+                   [-q*m.sin(rad)*(x_2**2/2)+q*m.sin(rad)*(l_a-x_2)**2/2 - P*m.cos(rad)*(x_a/2)], \
+                   [q*m.cos(rad)*(l_a-x_2)**2/2-q*m.cos(rad)*(x_2**2/2) + P*m.sin(rad)*(x_a/2)], \
+                   [d_1*m.cos(rad)*(-E*I_zz)-q*m.cos(rad)*(x_1)**4/24], \
+                   [0*(-E*I_zz)-q*m.cos(rad)*(x_2)**4/24], \
+                   [d_3*m.cos(rad)*(-E*I_zz)-q*m.cos(rad)*(x_3)**4/24 - P*m.sin(rad)*((x_3-(x_2+(x_a/2)))**3/6)], \
+                   [d_1*m.sin(rad)*(-E*I_yy)-q*m.sin(rad)*(x_1)**4/24], \
                    [0*(-E*I_yy)-(q*m.sin(rad)*(x_2)**4/24)], \
-                   [(-(d_3*m.sin(rad)))*(-E*I_yy)-((q*m.sin(rad)*(x_3)**4/24)+(-P*m.cos(rad))*((x_3-(x_2+(x_a/2)))**3/6))]])
+                   [d_3*m.sin(rad)*(-E*I_yy)-q*m.sin(rad)*(x_3)**4/24 + P*m.cos(rad)*((x_3-(x_2+(x_a/2)))**3/6)]])
 # #Solving previous matrices to get the F_1Y and F_2Y
 FY12 = np.linalg.solve(ymulti,yresult)
 
@@ -114,6 +120,58 @@ print ("Sum of y forces: ", Fy_sum)
 print ("Sum of z forces: ", Fz_sum)
 
 
+
+# =============================================================================
+#Check for the offset
+Ry1_ver = 69.77923867
+Ry2_ver = -100.9999212
+Ry3_ver = 34.53827393
+Rz1_ver = -454.9352956
+Rz2_ver = 628.9386392
+Rz3_ver = -177.6549949
+F_act_ver = 39.72774618
+
+Ry1_off = ((F_1V/1000)-Ry1_ver)/Ry1_ver*100
+Ry2_off = ((F_2V/1000)-Ry2_ver)/Ry2_ver*100
+Ry3_off = ((F_3V/1000)-Ry3_ver)/Ry3_ver*100
+Rz1_off = ((F_1W/1000)-Rz1_ver)/Rz1_ver*100
+Rz2_off = ((F_2W/1000)-Rz2_ver)/Rz2_ver*100
+Rz3_off = ((F_3W/1000)-Rz3_ver)/Rz3_ver*100
+F_act_off = ((F_act/1000)-F_act_ver)/F_act_ver*100
+
+print ("You are ", Ry1_off, "% off for Ry1" )
+print ("You are ", Ry2_off, "% off for Ry2" )
+print ("You are ", Ry3_off, "% off for Ry3" )
+print ("You are ", Rz1_off, "% off for Rz1" )
+print ("You are ", Rz2_off, "% off for Rz2" )
+print ("You are ", Rz3_off, "% off for Rz3" )
+print ("You are ", F_act_off, "% off for F_act" )
+
+# =============================================================================
+#Testing differences with 0 deflection a no distributed load
+#Ry1_ver_0 = -5.1970404
+#Ry2_ver_0 = 2.750962268
+#Ry3_ver_0 = 2.446078132
+#Rz1_ver_0 = -10.6555119
+#Rz2_ver_0 = 5.640308506
+#Rz3_ver_0 = 5.01520339
+#F_act_ver_0 = 37.9
+
+#Ry1_off_0 = ((F_1V/1000)-Ry1_ver_0)/Ry1_ver_0*100
+#Ry2_off_0 = ((F_2V/1000)-Ry2_ver_0)/Ry2_ver_0*100
+#Ry3_off_0 = ((F_3V/1000)-Ry3_ver_0)/Ry3_ver_0*100
+#Rz1_off_0 = ((F_1W/1000)-Rz1_ver_0)/Rz1_ver_0*100
+#Rz2_off_0 = ((F_2W/1000)-Rz2_ver_0)/Rz2_ver_0*100
+#Rz3_off_0 = ((F_3W/1000)-Rz3_ver_0)/Rz3_ver_0*100
+#F_act_off_0 = ((F_act/1000)-F_act_ver_0)/F_act_ver_0*100
+
+#print ("You are ", Ry1_off_0, "% off for Ry1_0" )
+#print ("You are ", Ry2_off_0, "% off for Ry2_0" )
+#print ("You are ", Ry3_off_0, "% off for Ry3_0" )
+#print ("You are ", Rz1_off_0, "% off for Rz1_0" )
+#print ("You are ", Rz2_off_0, "% off for Rz2_0" )
+#print ("You are ", Rz3_off_0, "% off for Rz3_0" )
+#print ("You are ", F_act_off_0, "% off for F_act_0" )
 
 # =============================================================================
 # #Calculating reaction forces in Y
