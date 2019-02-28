@@ -19,18 +19,18 @@ d = np.zeros((3196,4))
 # Check every line in the list lines
 
 for line in lines:
-    #if not line[0] == '*':
-    a.append(line)
-    print(line)
-'''if len(a) > 3195:       # make a list 'a' containing a string of the x,y and z coordinates for each node (3196 nodes)
+    if not line[0] == '*':
+        a.append(line)
+        print(line)
+        if len(a) > 3195:       # make a list 'a' containing a string of the x,y and z coordinates for each node (3196 nodes)
             break
 for j in range(len(a)):
     b = (a[j].split(','))
     for i in range(len(b)):
         d[j][i] = (float(b[i]))     # make an array with node number, x, y and z coordinate as a float
-#print(d)'''
+#print(d)
 
-'''xlist = []                      #list with x-coordinates of the nodes
+xlist = []                      #list with x-coordinates of the nodes
 
 for k in range(3196):
     xlist.append(d[k][1])
@@ -46,7 +46,7 @@ zlist = []                      #list with z-coordinates of the nodes
 
 for m in range(3196):
     zlist.append(d[k][3])
-print(zlist)'''
+print(zlist)
 
 
 
