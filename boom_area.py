@@ -57,7 +57,7 @@ def boomarea(A_stringer,t_skin,t_spar,d,l_spar,d_boom5spar,d_boom6spar,normalstr
     return B
 
 
-boomareas = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress, len(normal_stress.norm_stress))
+boomareas = boomarea(MoI_non_idealized.A_st, constants.t_sk, constants.t_sp, coordinates.a[4], constants.h,coordinates.d, (coordinates.a[4]- coordinates.d), normal_stress.norm_stress[0], len(normal_stress.norm_stress[0]))
 
 '''
 while j < n_step:

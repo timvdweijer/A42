@@ -71,24 +71,26 @@ x = np.arange(0, l_a+step, step)
 
 # =============================================================================
 
-
-plt.figure(1)
-
-plt.subplot(221)
-plt.plot(x, Sy, x, Sy_ut)
-
-plt.subplot(222)
-plt.axis()
-plt.plot(x, My, x, My_ut)
-
-plt.subplot(223)
-plt.plot(x, Sz, x, Sz_ut)
-
-plt.subplot(224)
-plt.axis()
-plt.plot(x, Mz, x, Mz_ut)
-
-plt.show()
+# =============================================================================
+# 
+# plt.figure(1)
+# 
+# plt.subplot(221)
+# plt.plot(x, Sy, x, Sy_ut)
+# 
+# plt.subplot(222)
+# plt.axis()
+# plt.plot(x, My, x, My_ut)
+# 
+# plt.subplot(223)
+# plt.plot(x, Sz, x, Sz_ut)
+# 
+# plt.subplot(224)
+# plt.axis()
+# plt.plot(x, Mz, x, Mz_ut)
+# 
+# plt.show()
+# =============================================================================
 
 # =============================================================================
 

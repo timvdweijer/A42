@@ -13,6 +13,7 @@ import itertools as it
 import bendingsheardiagrams
 from math import *
 from Torsion import (q_T)
+import normal_stress
 
 def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, boomarea, Sy, Sz):
     """
@@ -150,7 +151,16 @@ def shearstress(qtotI, qtotII, t_sk, t_sp, Sy):
             qstress_skin.append(qtotII[j][i]/t_sk)
         qstress_stiffener.append(qtotII[j][6]/t_sp)
     return(qstress_skin, qstress_stiffener)
-shear_stress=shearstress(totalshears[0], totalshears[1], t_sk, t_sp, bendingsheardiagrams.Sy )              
+shear_stress=shearstress(totalshears[0], totalshears[1], t_sk, t_sp, bendingsheardiagrams.Sy )           
+
+def vMises(sLE, sTE, totalshear):
+    Y_LE = []
+    Y_TE = []
+    for i in range(0, len(LE)):
+        Y_TE.append(sqrt(sTE[i]**2 + 3*totalshear[1][i][0]**2))
+        Y_LE.append(sqrt(sLE[i][7]**2 + 3*((totalshear[0][i][1]+totalshear[0][i][2])/2)**2))
+    return Y_LE, Y_TE
+mises = vMises(normal_stress.norm_stress[0], normal_stress.norm_stress[1], totalshears)
      
         
 
