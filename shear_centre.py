@@ -12,7 +12,7 @@ import centroid_MOI_ideal as cmi
 import itertools as it
 import bendingsheardiagrams
 from math import *
-
+from Torsion import (q_T)
 def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, boomarea, Sy, Sz):
     """
     cell II compute base shear flow (straight part)
@@ -113,7 +113,7 @@ for j in range(len(bendingsheardiagrams.Sy)):
         C22II.append(q_bIIforce[i]/thickII[i])
         A22II.append(1/(2*enclosed_area_2*G)*(dst_II[i]/thickII[i]))
 
-    A=  [[2* enclosed_area_1   , 2*enclosed_area_2] ,[sum(A21I) + (1/(2*enclosed_area_2*G)*(dst_II[6]/thickII[6])) ,-1*(sum(A22II)+ (1/(2*enclosed_area_1*G)*(dst_I[4]/thickI[4])))]]
+    A=  [[2* enclosed_area_1   , 2*enclosed_area_2] ,[sum(A21I) + (1/(2*enclosed_area_2*G)*(dst_II[6]/thickII[6])) ,-1*(sum(A22II)+ (1/(2*enclosed_area_1*G)*dst_I[4]/thickI[4]))]]
     C=  [[-1*(sum(C11I)+sum(C12II))], [-1*sum(C12II)/(2*enclosed_area_1*G)+sum(A22II)/(2*enclosed_area_2*G)]]
 
         
@@ -121,12 +121,37 @@ for j in range(len(bendingsheardiagrams.Sy)):
     redundant[j]= np.linalg.solve(A,C)
     redundant[j][0]=qs_0I[j]
     redundant[j][1]=qs_0II[j] 
+    
+    qtotI[j]=[]
+    qtotII[j]=[]
+    for i in q_cellI[j][i]:
+        qtotI[j].append(q_cellI[j][i]+redundant[j][[0]]+q_T[0])
+    for i in q_cellII[j][i]:
+        qtotII[j].append(q_cellI[j][i]+redundant[j][[0]]+q_T[0])
+        qtotII[j][6]=qtotI[j][6]-qtotII[j][4]
+        
+        
+        
+#shear stress
+    qstress_skin[j]=[]
+    
+    for i in (0,1,2,3,4,5):
+        qstress_skin[j].append(qtotII[j][i]/t_sk)
+    for i in (0,1,2,3):
+        qstress_skin[j].append(qtotI[j][i]/t_sk)
+    for i in (7,8,9,10,11):
+        qstress_skin[j].append(qtotII[j][i]/t_sk)
+    
+    qstress_stiffener[j]=qtotII[j][6]/t_sp
+    
 
-    q_totI[j]=[]
-    q_totII[j]=[]
-    for i in rangez 5:     
-        q_totI[j].append(q_cellI[i]+qs0I[j])
-    for i in range 11:
-        q_totII[j].append(q_cellII[i]+qs0II[j])
+# =============================================================================
+#     q_totI[j]=[]
+#     q_totII[j]=[]
+#     for i in range 5:     
+#         q_totI[j].append(q_cellI[i]+qs0I[j])
+#     for i in range 11:
+#         q_totII[j].append(q_cellII[i]+qs0II[j])
+# 
+# =============================================================================
 
-                                 
