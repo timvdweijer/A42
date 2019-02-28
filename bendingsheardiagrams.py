@@ -21,7 +21,21 @@ def heaviside(x1):
 step=0.001
 x = np.arange(1, l_a+step, step)
 
+# Unit test
+Ry1_ut = reactionforces.Ry1_ver*1000
+Ry2_ut = reactionforces.Ry2_ver*1000
+Ry3_ut = reactionforces.Ry3_ver*1000
+Rz1_ut = reactionforces.Rz1_ver*1000
+Rz2_ut = reactionforces.Rz2_ver*1000
+Rz3_ut = reactionforces.Rz3_ver*1000
+F_act_ut = reactionforces.F_act_ver*1000
 
+Sy_ut = []
+Sz_ut = []
+My_ut = []
+Mz_ut = []
+
+#Reaction forces
 R1v= reactionforces.F_1V
 R1w= reactionforces.F_1W
 R2v= reactionforces.F_2V
@@ -38,7 +52,7 @@ Mz=[]
 My=[]
 
 rad = np.radians(theta)
-step=0.001
+step=0.0001
 for x in np.arange(0, l_a+step, step):
 #Shear Forces
     Sy.append(q*np.cos(rad)*x-R1v*heaviside(x-x_1)-Ract1*np.sin(rad)*heaviside(x-(x_2-(x_a/2)))-R2v*heaviside(x-x_2)+P*np.sin(rad)*heaviside(x-(x_2+(x_a/2)))-R3v*heaviside(x-x_3))
@@ -50,6 +64,16 @@ for x in np.arange(0, l_a+step, step):
     
     Mz.append(-1*(q * np.cos(rad))*((x**2)/2)+R1v*heaviside(x-x_1)*(x-x_1)+R2v*heaviside(x-x_2)*(x-x_2)+R3v*heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
+#Unit test
+    #Shear Forces
+    Sy_ut.append(q*np.cos(rad)*x-Ry1_ut*heaviside(x-x_1)- F_act_ut*np.sin(rad)*heaviside(x-(x_2-(x_a/2)))-Ry2_ut*heaviside(x-x_2)+P*np.sin(rad)*heaviside(x-(x_2+(x_a/2)))-Ry3_ut*heaviside(x-x_3))
+
+    Sz_ut.append(-q*np.sin(rad)*x-Rz1_ut*heaviside(x-x_1)- F_act_ut*np.cos(rad)*heaviside(x-(x_2-x_a/2))+ P*np.cos(rad)*heaviside(x-(x_2+x_a/2))- Rz2_ut*heaviside(x-x_2)-Rz3_ut*heaviside(x-x_3))
+
+#Moments
+    My_ut.append((q*np.sin(rad))*((x**2)/2)+Rz1_ut*(x-x_1)*heaviside(x-x_1)+F_act_ut*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))+Rz2_ut*(x-x_2)*heaviside(x-x_2)-P*np.cos(rad)*(x-(x_2+x_a/2))*heaviside(x-(x_2+x_a/2))+Rz3_ut*(x-x_3)*heaviside(x-x_3))
+    
+    Mz_ut.append(-1*(q * np.cos(rad))*((x**2)/2)+Ry1_ut*heaviside(x-x_1)*(x-x_1)+Ry2_ut*heaviside(x-x_2)*(x-x_2)+Ry3_ut*heaviside(x-x_3)*(x-x_3)+F_act_ut*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
 x = np.arange(0, l_a+step, step)
 #Torque
@@ -62,43 +86,23 @@ x = np.arange(0, l_a+step, step)
 # 
 
 # =============================================================================
-# Unit test
-Ry1_ut = reactionforces.Ry1_ver
-Ry2_ut = reactionforces.Ry2_ver
-Ry3_ut = reactionforces.Ry3_ver
-Rz1_ut = reactionforces.Rz1_ver
-Rz2_ut = reactionforces.Rz2_ver
-Rz3_ut = reactionforces.Rz3_ver
-F_act_ut = reactionforces.F_act_ver
-
-Sy_ut = []
-Sz_ut = []
-My_ut = []
-Mz_ut = []
-
-step_ut = 0.001
-
-for x_ut in np.arange(0, l_a+step_ut, step_ut):
-    #Shear Forces
-    Sy_ut.append(q*np.cos(rad)*x_ut-Ry1_ver*heaviside(x_ut-x_1)- F_act_ver*np.sin(rad)*heaviside(x_ut-(x_2-(x_a/2)))-Ry2_ver*heaviside(x_ut-x_2)+P*np.sin(rad)*heaviside(x_ut-(x_2+(x_a/2)))-Ry3_ver*heaviside(x_ut-x_3))
-
-    Sz_ut.append(-q*np.sin(rad)*x_ut-Rz1_ver*heaviside(x_ut-x_1)- F_act_ver*np.cos(rad)*heaviside(x_ut-(x_2-x_a/2))+ P*np.cos(rad)*heaviside(x_ut-(x_2+x_a/2))- Rz2_ver*heaviside(x_ut-x_2)-Rz3_ver*heaviside(x_ut-x_3))
-
-#Moments
-    My_ut.append((q*np.sin(rad))*((x_ut**2)/2)+Rz1_ver*(x_ut-x_1)*heaviside(x_ut-x_1)+F_Act_ver*np.cos(rad)*(x_ut-(x_2-x_a/2))*heaviside(x_ut-(x_2-x_a/2))+Rz2_ver*(x_ut-x_2)*heaviside(x_ut-x_2)-P*np.cos(rad)*(x_ut-(x_2+x_a/2))*heaviside(x_ut-(x_2+x_a/2))+Rz3_ver*(x_ut-x_3)*heaviside(x_ut-x_3))
-    
-    Mz_ut.append(-1*(q * np.cos(rad))*((x_ut**2)/2)+Ry1_ver*heaviside(x_ut-x_1)*(x_ut-x_1)+Ry2_ver*heaviside(x_ut-x_2)*(x_ut-x_2)+Ry3_ver*heaviside(x_ut-x_3)*(x_ut-x_3)+F_act_ver*np.sin(rad)*heaviside(x_ut-(x_2-x_a/2))*(x_ut-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x_ut-(x_2+x_a/2))*(x_ut-(x_2+x_a/2)))
-x_ut = np.arange(0, l_a+step_ut, step_ut)
-
 
 
 plt.figure(1)
-plt.subplot(211)
-plt.plot(x, Sy, x, Sz)
+plt.subplot(221)
+plt.plot(x, Sy, x, Sy_ut)
 
-plt.subplot(212)
+plt.subplot(222)
 plt.axis()
-plt.plot(x, My, x, Mz)
+plt.plot(x, My, x, My_ut)
+
+plt.subplot(223)
+plt.plot(x, Sz, x, Sz_ut)
+
+plt.subplot(224)
+plt.axis()
+plt.plot(x, Mz, x, Mz_ut)
+
 plt.show()
 
 
