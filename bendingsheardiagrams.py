@@ -23,12 +23,12 @@ x = np.arange(1, l_a+step, step)
 
 
 R1v= reactionforces.F_1V
-R1w=reactionforces.F_1W
-R2v=reactionforces.F_2V
-R2w=reactionforces.F_2W
-R3v=reactionforces.F_3V
-R3w=reactionforces.F_3W
-Ract1=reactionforces.F_act
+R1w= reactionforces.F_1W
+R2v= reactionforces.F_2V
+R2w= reactionforces.F_2W
+R3v= reactionforces.F_3V
+R3w= reactionforces.F_3W
+Ract1= reactionforces.F_act
 
 
 Sy=[]
@@ -58,15 +58,50 @@ x = np.arange(0, l_a+step, step)
 
 #plots
 # =============================================================================
-# plt.figure(1)
-# plt.subplot(211)
-# plt.plot(x, Sy, x, Sz)
+
 # 
-# plt.subplot(212)
-# plt.axis()
-# plt.plot(x, My, x, Mz)
-# plt.show()
-# 
+
+# =============================================================================
+# Unit test
+Ry1_ut = reactionforces.Ry1_ver
+Ry2_ut = reactionforces.Ry2_ver
+Ry3_ut = reactionforces.Ry3_ver
+Rz1_ut = reactionforces.Rz1_ver
+Rz2_ut = reactionforces.Rz2_ver
+Rz3_ut = reactionforces.Rz3_ver
+F_act_ut = reactionforces.F_act_ver
+
+Sy_ut = []
+Sz_ut = []
+My_ut = []
+Mz_ut = []
+
+step_ut = 0.001
+
+for x_ut in np.arange(0, l_a+step_ut, step_ut):
+    #Shear Forces
+    Sy_ut.append(q*np.cos(rad)*x_ut-Ry1_ver*heaviside(x_ut-x_1)- F_act_ver*np.sin(rad)*heaviside(x_ut-(x_2-(x_a/2)))-Ry2_ver*heaviside(x_ut-x_2)+P*np.sin(rad)*heaviside(x_ut-(x_2+(x_a/2)))-Ry3_ver*heaviside(x_ut-x_3))
+
+    Sz_ut.append(-q*np.sin(rad)*x_ut-Rz1_ver*heaviside(x_ut-x_1)- F_act_ver*np.cos(rad)*heaviside(x_ut-(x_2-x_a/2))+ P*np.cos(rad)*heaviside(x_ut-(x_2+x_a/2))- Rz2_ver*heaviside(x_ut-x_2)-Rz3_ver*heaviside(x_ut-x_3))
+
+#Moments
+    My_ut.append((q*np.sin(rad))*((x_ut**2)/2)+Rz1_ver*(x_ut-x_1)*heaviside(x_ut-x_1)+F_Act_ver*np.cos(rad)*(x_ut-(x_2-x_a/2))*heaviside(x_ut-(x_2-x_a/2))+Rz2_ver*(x_ut-x_2)*heaviside(x_ut-x_2)-P*np.cos(rad)*(x_ut-(x_2+x_a/2))*heaviside(x_ut-(x_2+x_a/2))+Rz3_ver*(x_ut-x_3)*heaviside(x_ut-x_3))
+    
+    Mz_ut.append(-1*(q * np.cos(rad))*((x_ut**2)/2)+Ry1_ver*heaviside(x_ut-x_1)*(x_ut-x_1)+Ry2_ver*heaviside(x_ut-x_2)*(x_ut-x_2)+Ry3_ver*heaviside(x_ut-x_3)*(x_ut-x_3)+F_act_ver*np.sin(rad)*heaviside(x_ut-(x_2-x_a/2))*(x_ut-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x_ut-(x_2+x_a/2))*(x_ut-(x_2+x_a/2)))
+x_ut = np.arange(0, l_a+step_ut, step_ut)
+
+
+
+plt.figure(1)
+plt.subplot(211)
+plt.plot(x, Sy, x, Sz)
+
+plt.subplot(212)
+plt.axis()
+plt.plot(x, My, x, Mz)
+plt.show()
+
+
 # =============================================================================
 
 #Force equilibrium

@@ -113,8 +113,31 @@ Fz_sum = F_1W +(m.cos(rad))*F_act +F_2W  +F_3W +q*m.sin(rad)*l_a + (-P*m.cos(rad
 print ("Sum of y forces: ", Fy_sum)
 print ("Sum of z forces: ", Fz_sum)
 
+# =============================================================================
+#Check for the offset
+Ry1_ver = 69,77923867
+Ry2_ver = -100,9999212
+Ry3_ver = 34,53827393
+Rz1_ver = -454.9352956
+Rz2_ver = 628.9386392
+Rz3_ver = -177.6549949
+F_act_ver = 39.72774618
 
+Ry1_off = ((F_1V/1000)-Ry1_ver)/Ry1_ver*100
+Ry2_off = ((F_2V/1000)-Ry2_ver)/Ry2_ver*100
+Ry3_off = ((F_3V/1000)-Ry3_ver)/Ry3_ver*100
+Rz1_off = ((F_1W/1000)-Rz1_ver)/Rz1_ver*100
+Rz2_off = ((F_2W/1000)-Rz2_ver)/Rz2_ver*100
+Rz3_off = ((F_3W/1000)-Rz3_ver)/Rz3_ver*100
+F_act_off = ((F_act/1000)-F_act_ver)/F_act_ver*100
 
+print ("You are ", Ry1_off, "% off for Ry1" )
+print ("You are ", Ry2_off, "% off for Ry2" )
+print ("You are ", Ry3_off, "% off for Ry3" )
+print ("You are ", Rz1_off, "% off for Rz1" )
+print ("You are ", Rz2_off, "% off for Rz2" )
+print ("You are ", Rz3_off, "% off for Rz3" )
+print ("You are ", F_act_off, "% off for F_act" )
 # =============================================================================
 # #Calculating reaction forces in Y
 # 
