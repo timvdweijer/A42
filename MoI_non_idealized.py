@@ -101,6 +101,9 @@ I_yy_off = (I_yy-I_yy_desired)/I_yy_desired*100
 I_zz_off= (I_zz-I_zz_desired)/I_zz_desired*100
 I_yy_off_am = (I_yy-I_yy_zonder_centroid/I_yy_zonder_centroid)*100
 I_yy_ver = (I_yy-I_yy_zonder_centroid)/I_yy_zonder_centroid*100
+
+J = I_yy + I_zz
+print (J*constants.G)
 # =============================================================================
 # 
 # print ("You are ", I_yy_off, "% off for Iyy" )

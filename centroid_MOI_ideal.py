@@ -3,28 +3,29 @@ import boom_area
 import coordinates
 import bendingsheardiagrams as bsd
 
-def centroid(n_step):                   #for centroid of idealized structure, we assume the same centroid as for the non-idealized structure
+def centroid(boomarea, y_pos, z_pos ,n_step):                   #for centroid of idealized structure, we assume the same centroid as for the non-idealized structure
 
     centroid_z_pos = np.zeros(n_step)
     centroid_y_pos = np.zeros(n_step)
-    centroid_z_pos += -0.10756263838748933
 
-    '''
+    i = 0
     while i < n_step:
+        numlst_z = []
+        numlst_y = []
         j = 0
         while j < len(boomarea[i]):
-            numlst_z.append((B[i][j]) * (z_pos[j]))
-            numlst_y.append((B[i][j]) * (y_pos[j]))
-            den = sum(B[i])
+            numlst_z.append((boomarea[i][j]) * (z_pos[j]))
+            numlst_y.append((boomarea[i][j]) * (y_pos[j]))
             j += 1
+        den = sum(boomarea[i])
         centroid_z_pos[i] = sum(numlst_z) / den
         centroid_y_pos[i] = sum(numlst_y) / den
-        i += 1'''
+        i += 1
 
 
     return centroid_y_pos, centroid_z_pos
 
-c = centroid(len(bsd.Sy))
+c = centroid(boom_area.boomareas, coordinates.a[0], coordinates.a[1],  len(bsd.Sy))
 
 
 def i_yy(n_booms, boomarea, centroid_z_pos, boom_z_pos, n_step):
