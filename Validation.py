@@ -48,20 +48,27 @@ for m in range(3196):
     zlist.append(d[m][3])
 print(zlist)
 
-for z in range(len(ylist)):         #doesn't work yet
-    if not ylist[z] == 0:
-        print(ylist[z])
-        xlist.remove(xlist[z])
-        ylist.remove(ylist[z])
-        zlist.remove(zlist[z])
+#only for TE and LE
 
+xte = []
+yte = []
+zte = []
+
+
+for z in range(len(ylist)):
+    if ylist[z] == 0 and not zlist[z] == 0:
+        xte.append(xlist[z])
+        yte.append(ylist[z])
+        zte.append(zlist[z])
+
+#plot
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure()
 ax = Axes3D(fig)
 
-s = ax.scatter(xlist,ylist,zlist)
+s = ax.scatter(xte,yte,zte)
 
 plt.show()
 
