@@ -63,7 +63,9 @@ xx = []
 for x in np.arange(0, l_a + lstep, lstep):
     T.append(-1*Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + Fact_w * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + P_v * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) - P_w * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) +  q_v * x* (-1 * (0.25*C_a - h/2.)))
     xx.append(x*1000)
-plt.plot(xx ,T)
+# =============================================================================
+# plt.plot(xx ,T)
+# =============================================================================
 # =============================================================================
 # T = []                                                      #create empty list for torque, the zero is to d
 # xx =[]                                                      #create empty list for x_positions, the zero is to d
