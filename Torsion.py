@@ -22,13 +22,13 @@ def heaviside(x):
         return 0
     elif x >= 0:
         return 1
-F_act = 39.72774618*1000
+F_act = 39.72774618*1000 
 theta_r = radians(theta)                                    #convert degrees to radians
 q_w = 0#sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
 P_w = cos(theta_r) * P                                  #z_component of P
 P_v = 0#sin(theta_r) * P                                      #y_component of P
-Fact_w = cos(theta_r) *  F_act                            #z_component of jammed actuator
+Fact_w =  0#cos(theta_r) *  F_act                            #z_component of jammed actuator
 Fact_v = 0#sin(theta_r) * F_act                                #y_component of jammed actuator
 
 
@@ -117,15 +117,34 @@ def shear_torque(T, s_semi, s_rib, s_TE, area_1, area_2):
 q_T = shear_torque(T, s_semi, s_rib, s_TE, area_1, area_2)
 
 def theta(q_T, lstep): #gives the angle at all location
-    theta = [] 
-    theta.append( (q_T[0][0]* (s_semi+s_rib) - q_T[0][1]*s_rib)/(2*area_1*G) * lstep) #p.613 formula megson where lstep = dz                                                   #deflection in terms of theta                                            #deflection theta
-    for i in range(1, len(q_T[:])):
+    """split up as twist at actuator 1 is zero"""
+    theta1 = [0]* (419)
+    for i in range(417, -1, -1 ):
+        d_theta_torque = (q_T[i][0]* (s_semi+s_rib) - q_T[i][1]*s_rib)/(2*area_1*G) * lstep
+        theta1[i] = (d_theta_torque + theta1[i+1] )
+    theta1.remove(0)
+    theta2 = [0] 
+    for i in range(419 , len(q_T[:])):
         d_theta_torque = (q_T[i][0]* (s_semi+s_rib) - q_T[i][1]*s_rib)/(2*area_1*G) * lstep #p.613 formula megson where lstep = dz
-        theta.append(d_theta_torque + theta[i-1])
-    return (theta)
+        theta2.append(d_theta_torque + theta2[i-419])
+    finaltheta = theta1 +  theta2
+    return (finaltheta)
 
-theta_corrected = theta(q_T, lstep) - theta(q_T, lstep)[int(x_1 *1000)] #assume deflection is zero at hinge 1 
+theta_corrected = theta(q_T, lstep) #- theta(q_T, lstep)[int((x_2-x_a/2) *1000)] #assume deflection is zero at hinge 1 
 # =============================================================================
-# plt.plot(xx, theta_corrected)
+# plt.plot(xx, theta_corrected)#, xx, T)
 # =============================================================================
+
+def displacement_calc(theta, radius, dis_TE):
+    displacementLE = []
+    displacementTE = []
+    for j in range(0, len(theta)):
+        displacementLE.append( -1*theta[j]*radius)
+        displacementTE.append(theta[j]* dis_TE)
+    return displacementLE, displacementTE
+displacement = displacement_calc(theta_corrected, h/2, C_a -h/2)
+
+plt.plot(xx, displacement[0], xx,displacement[1])
+        
+
 
