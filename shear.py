@@ -14,6 +14,8 @@ import bendingsheardiagrams
 from math import *
 from Torsion import (q_T)
 import normal_stress
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def base_shear(coordinatesy, coordinatesz, Izz, Iyy, centroidy, centroidz, boomarea, Sy, Sz):
     """
@@ -130,42 +132,47 @@ def totalshearflow(q_cellI,q_cellII, Sy, q_T, redundantshear):
         qtotI_lst = []
         qtotII_lst = []
         for i in range(len(q_cellI[j])):
-            qtotI_lst.append(q_cellI[j][i]+ redundantshear[j][0]+q_T[j][0])
+            qtotI_lst.append(q_cellI[j][i]+ redundantshear[j][0]-q_T[j][0])
         for i in range(len(q_cellII[j])):
-            qtotII_lst.append(q_cellII[j][i]+redundantshear[j][1]+q_T[j][1])
+            qtotII_lst.append(q_cellII[j][i]+redundantshear[j][1]-q_T[j][1])
         qtotII_lst[6]=qtotII_lst[6]-qtotI_lst[4]
         qtotI.append(qtotI_lst)
         qtotII.append(qtotII_lst)
-    return (qtotI, qtotII)
+    return [qtotI, qtotII]
 totalshears=totalshearflow(baseshear[0], baseshear[1], bendingsheardiagrams.Sy, q_T, redundantshear)
 
-# =============================================================================
-# def shearstress(qtotI, qtotII, t_sk, t_sp, Sy):
-#     qstress_skin=[]
-#     qstress_stiffener=[]
-#     for j in range(0, len(Sy)):        
-#         for i in (0,1,2,3,4,5):
-#             qstress_skin.append(qtotII[j][i]/t_sk)
-#         for i in (0,1,2,3):
-#             qstress_skin.append(qtotI[j][i]/t_sk)
-#         for i in (7,8,9,10,11):
-#             qstress_skin.append(qtotII[j][i]/t_sk)
-#         qstress_stiffener.append(qtotII[j][6]/t_sp)
-#     return(qstress_skin, qstress_stiffener)
-# shear_stress=shearstress(totalshears[0], totalshears[1], t_sk, t_sp, bendingsheardiagrams.Sy )           
-# =============================================================================
-# =============================================================================
-# 
-# def vMises(sLE, sTE, shear_stress):
-#     Y_LE = []
-#     Y_TE = []
-#     for i in range(0, len(LE)):
-#         Y_TE.append(sqrt(sTE[i]**2 + 3*totalshear[1][i][0]**2))
-#         Y_LE.append(sqrt(sLE[i][7]**2 + 3*((totalshear[0][i][1]+totalshear[0][i][2])/2)**2))
-#     return Y_LE, Y_TE
-# mises = vMises(normal_stress.norm_stress[0], normal_stress.norm_stress[1], shear_stress)
-#      
-# =============================================================================
+def shearstress(qtotI, qtotII, t_sk, t_sp, Sy):
+    shear_stress = []
+    shear_spar = []
+    for j in range(0, len(Sy)):
+        qstress_skin=[]        
+        for i in (0,1,2,3,4,5):
+            qstress_skin.append(qtotII[j][i]/t_sk)
+        for i in (0,1,2,3):
+            qstress_skin.append(qtotI[j][i]/t_sk)
+        for i in (7,8,9,10,11):
+            qstress_skin.append(qtotII[j][i]/t_sk)
+        shear_stress.append(qstress_skin)
+        shear_spar.append(qtotII[j][6]/t_sp)
         
+    return [shear_stress, shear_spar]
+shear_stress=shearstress(totalshears[0], totalshears[1], t_sk, t_sp, bendingsheardiagrams.Sy )           
 
 
+def vMises(normalstress, shear_stress, coordinatesy, coordinatesz):
+    mises_lst = []
+    x = []
+    for i in range(0,len(normalstress)):
+        mises = []
+        for j in range(0, len(coordinatesy)):
+            if j == 14:
+                mises.append( sqrt((normalstress[i][j])**2 + 3*((shear_stress[0][i][j]/(1*10**6) + shear_stress[0][i][0]/(1*10**6))/2)**2))
+            elif j == 5 or j == 9:
+                mises.append(sqrt((normalstress[i][j])**2 + 3*((shear_stress[0][i][j]/(1*10**6) + shear_stress[0][i][j + 1]/(1*10**6) + shear_stress[1][i]/(1*10**6))/3)**2))
+            else:
+                mises.append(sqrt((normalstress[i][j])**2 + 3*((shear_stress[0][i][j]/(1*10**6) + shear_stress[0][i][j + 1]/(1*10**6))/2)**2))
+        x.append(i/1000)
+        mises_lst.append(mises)
+    return [mises_lst, x, coordinatesy, coordinatesz]
+mises = vMises(normal_stress.norm_stress[0]/(1*10**6), shear_stress, a[0], a[1])
+  
