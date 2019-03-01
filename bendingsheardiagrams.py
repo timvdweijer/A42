@@ -32,11 +32,26 @@ Ract1=reactionforces.F_act
 
 
 Sy=[]
-Sx=[]
 Sz=[]
 Mz=[]
 My=[]
 
+# =============================================================================
+#To perform a unit test
+Sy_ut = []
+Sz_ut = []
+Mz_ut = []
+My_ut = []
+
+Ry1_ut = reactionforces.Ry1_ver*1000
+Ry2_ut = reactionforces.Ry2_ver*1000
+Ry3_ut = reactionforces.Ry3_ver*1000
+Rz1_ut = reactionforces.Rz1_ver*1000
+Rz2_ut = reactionforces.Rz2_ver*1000
+Rz3_ut = reactionforces.Rz3_ver*1000
+F_act_ut = reactionforces.F_act_ver*1000
+
+# =============================================================================
 rad = np.radians(theta)
 step=0.001
 for x in np.arange(0, l_a+step, step):
@@ -49,7 +64,15 @@ for x in np.arange(0, l_a+step, step):
     My.append((q*np.sin(rad))*((x**2)/2)+R1w*(x-x_1)*heaviside(x-x_1)+Ract1*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))+R2w*(x-x_2)*heaviside(x-x_2)-P*np.cos(rad)*(x-(x_2+x_a/2))*heaviside(x-(x_2+x_a/2))+R3w*(x-x_3)*heaviside(x-x_3))
     
     Mz.append(-1*(q * np.cos(rad))*((x**2)/2)+R1v*heaviside(x-x_1)*(x-x_1)+R2v*heaviside(x-x_2)*(x-x_2)+R3v*heaviside(x-x_3)*(x-x_3)+Ract1*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
+#Shear forces verification
+    Sy_ut.append(q*np.cos(rad)*x-Ry1_ut*heaviside(x-x_1)-F_act_ut*np.sin(rad)*heaviside(x-(x_2-(x_a/2)))-Ry2_ut*heaviside(x-x_2)+P*np.sin(rad)*heaviside(x-(x_2+(x_a/2)))-Ry3_ut*heaviside(x-x_3))
 
+    Sz_ut.append(-q*np.sin(rad)*x-Rz1_ut*heaviside(x-x_1)-F_act_ut*np.cos(rad)*heaviside(x-(x_2-x_a/2))+P*np.cos(rad)*heaviside(x-(x_2+x_a/2))-Rz2_ut*heaviside(x-x_2)-Rz3_ut*heaviside(x-x_3))
+
+#Moments verification
+    My_ut.append((q*np.sin(rad))*((x**2)/2)+Rz1_ut*(x-x_1)*heaviside(x-x_1)+F_act_ut*np.cos(rad)*(x-(x_2-x_a/2))*heaviside(x-(x_2-x_a/2))+Rz2_ut*(x-x_2)*heaviside(x-x_2)-P*np.cos(rad)*(x-(x_2+x_a/2))*heaviside(x-(x_2+x_a/2))+Ry3_ut*(x-x_3)*heaviside(x-x_3))
+    
+    Mz_ut.append(-1*(q * np.cos(rad))*((x**2)/2)+Ry1_ut*heaviside(x-x_1)*(x-x_1)+Ry2_ut*heaviside(x-x_2)*(x-x_2)+Ry3_ut*heaviside(x-x_3)*(x-x_3)+F_act_ut*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
 x = np.arange(0, l_a+step, step)
 #Torque
@@ -73,24 +96,50 @@ x = np.arange(0, l_a+step, step)
 
 # =============================================================================
 # 
-# plt.figure(1)
-# 
-# plt.subplot(221)
-# plt.plot(x, Sy, x, Sy_ut)
-# 
-# plt.subplot(222)
-# plt.axis()
-# plt.plot(x, My, x, My_ut)
-# 
-# plt.subplot(223)
-# plt.plot(x, Sz, x, Sz_ut)
-# 
-# plt.subplot(224)
-# plt.axis()
-# plt.plot(x, Mz, x, Mz_ut)
-# 
-# plt.show()
+#plt.figure(1)
+
+plt.subplot(221)
+plt.plot(x, Sy, x, Sy_ut)
+plt.xlabel('distance (m)')
+plt.ylabel('Shear (N)')
+plt.title('Shear in y')
+plt.grid(True)
+plt.legend(('Numerical model', 'Verification  model'),
+           loc='lower right')
+plt.suptitle('Shear and Bending moment diagrams')
+
+plt.subplot(222)
+plt.axis()
+plt.plot(x, My, x, My_ut)
+plt.xlabel('distance (m)')
+plt.ylabel('Bending moment (Nm)')
+plt.title('Moment around y')
+plt.grid(True)
+plt.legend(('Numerical model', 'Verification  model'),
+           loc='lower right')
+
+plt.subplot(223)
+plt.plot(x, Sz, x, Sz_ut)
+plt.xlabel('distance (m)')
+plt.ylabel('Shear (N)')
+plt.title('Shear in x')
+plt.grid(True)
+plt.legend(('Numerical model', 'Verification  model'),
+           loc='upper right')
+
+plt.subplot(224)
+plt.axis()
+plt.plot(x, Mz, x, Mz_ut)
+plt.xlabel('distance (m)')
+plt.ylabel('Bending moment (Nm)')
+plt.title('Moment around z')
+plt.grid(True)
+plt.legend(('Numerical model', 'Verification  model'),
+           loc='upper right')
+
+plt.show()
 # =============================================================================
+
 
 # =============================================================================
 
