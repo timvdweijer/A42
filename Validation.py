@@ -66,14 +66,14 @@ te_number=[]
 
 
 for i in range(len(ylist)):
-    if ylist[z]==0 and zlist[i]>0:
-        le_number.append(i)
+    if ylist[i]==0 and zlist[i]>0:
+        le_number.append(i+1)
         xle.append(xlist[i])
         yle.append(ylist[i])
         zle.append(zlist[i])      
         
 for i in range(len(ylist)):
-    if ylist[z]==0 and zlist[i]<0:
+    if ylist[i]==0 and zlist[i]<0:
         te_number.append(i+1)
         xte.append(xlist[i])
         yte.append(ylist[i])
