@@ -19,6 +19,8 @@ defl= np.column_stack((node_n,d_mag,d_x,d_y,d_z))
 
 y_defle = []
 y_defte=[]
+z_defle = []
+z_defte = []
 # for i in range (len(defl)):
 #     for j in range(len(le_number)):
 #         if defl[i,0] == le_number[j]:
@@ -31,9 +33,37 @@ for i in range(len(le_number)):
 for i in range(len(te_number)):
     y_defte.append(defl[te_number[i],3])
     
+for i in range(len(le_number)):
+    z_defle.append(defl[le_number[i],4])
+for i in range(len(te_number)):
+    z_defte.append(defl[te_number[i],4])
+    
 import matplotlib.pyplot as plt
-plt.figure(2)
+plt.subplot(221)
 plt.scatter(xle, y_defle)
+plt.title("Leading edge deflection in y-direction")
+plt.xlabel("Spanwise location")
+plt.ylabel("y-deflection")
+
+plt.subplot(222)
+plt.scatter(xte, y_defte)
+plt.title("Trailing edge deflection in y-direction")
+plt.xlabel("Spanwise location")
+plt.ylabel("y-deflection")
+
+plt.subplot(223)
+plt.scatter(xle, z_defle)
+plt.title("Leading edge deflection in z-direction")
+plt.xlabel("Spanwise location")
+plt.ylabel("z-deflection")
+
+plt.subplot(224)
+plt.scatter(xte,z_defte)
+plt.title("Trailing edge deflection in z-direction")
+plt.xlabel("Spanwise location")
+plt.ylabel("z-deflection")
+
+
 #ilist= []
 #
 #for i in range(len(defl)):
