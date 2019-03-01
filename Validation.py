@@ -53,15 +53,41 @@ for m in range(3196):
 xte = []
 yte = []
 zte = []
-n_number = []
+# =============================================================================
+# n_number = []
+# =============================================================================
+
+xle = []
+yle = []
+zle = []
+le_number=[]
+te_number=[]
 
 
-for z in range(len(ylist)):
-    if ylist[z] == 0 and not zlist[z] == 0:
-        n_number.append(z+1)
-        xte.append(xlist[z])
-        yte.append(ylist[z])
-        zte.append(zlist[z])
+
+for i in range(len(ylist)):
+    if ylist[z]==0 and zlist[i]>0:
+        le_number.append(i)
+        xle.append(xlist[i])
+        yle.append(ylist[i])
+        zle.append(zlist[i])      
+        
+for i in range(len(ylist)):
+    if ylist[z]==0 and zlist[i]<0:
+        te_number.append(i+1)
+        xte.append(xlist[i])
+        yte.append(ylist[i])
+        zte.append(zlist[i])      
+# =============================================================================
+# for z in range(len(ylist)):
+#     if ylist[z] == 0 and not zlist[z] == 0:
+#         n_number.append(z+1)
+#         xte.append(xlist[z])
+#         yte.append(ylist[z])
+#         zte.append(zlist[z])
+# =============================================================================
+        
+
 
 #plot
 
