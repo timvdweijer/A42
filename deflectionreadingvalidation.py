@@ -26,13 +26,14 @@ y_defte=[]
 # =============================================================================
             
 
-for i in range(len(xte)):
+for i in range(len(le_number)):
     y_defle.append(defl[le_number[i],3])
 for i in range(len(te_number)):
     y_defte.append(defl[te_number[i],3])
-
-
-
+    
+import matplotlib.pyplot as plt
+plt.figure(2)
+plt.scatter(xle, y_defle)
 #ilist= []
 #
 #for i in range(len(defl)):
