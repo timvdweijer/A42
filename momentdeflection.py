@@ -129,11 +129,11 @@ for i in range(0, len(Defl)):
 
 alphav1 = m.atan(d_1*m.cos(rad)/(x_2-x_1))
 alphav2 = m.atan(delta[int(x_1*1000),1]/(x_2-x_1))
-alphavT = alphav1 +alphav2
+alphavT = alphav1 + alphav2
 
 alphaw1 = m.atan(d_1*m.sin(rad)/(x_2-x_1))
 alphaw2 = m.atan(delta[int(x_1*1000),2]/(x_2-x_1))
-alphawT = alphaw1 +alphaw2
+alphawT = alphaw1 + alphaw2
 
 for i in range(0, len(Defl)):
     delta[i,1] = delta[i,0]*m.sin(alphavT) + delta[i,1] *m.cos(alphavT)
