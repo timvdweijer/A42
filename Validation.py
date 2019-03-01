@@ -21,7 +21,7 @@ d = np.zeros((3196,4))
 for line in lines:
     if not line[0] == '*':
         a.append(line)
-        print(line)
+        #print(line)
         if len(a) > 3195:       # make a list 'a' containing a string of the x,y and z coordinates for each node (3196 nodes)
             break
 for j in range(len(a)):
@@ -34,29 +34,31 @@ xlist = []                      #list with x-coordinates of the nodes
 
 for k in range(3196):
     xlist.append(d[k][1])
-print(xlist)
+#print(xlist)
 
 ylist = []                      #list with y-coordinates of the nodes
 
 for l in range(3196):
     ylist.append(d[l][2])
-print(ylist)
+#print(ylist)
 
 zlist = []                      #list with z-coordinates of the nodes
 
 for m in range(3196):
     zlist.append(d[m][3])
-print(zlist)
+#print(zlist)
 
 #only for TE and LE
 
 xte = []
 yte = []
 zte = []
+n_number = []
 
 
 for z in range(len(ylist)):
     if ylist[z] == 0 and not zlist[z] == 0:
+        n_number.append(z+1)
         xte.append(xlist[z])
         yte.append(ylist[z])
         zte.append(zlist[z])
@@ -71,7 +73,6 @@ ax = Axes3D(fig)
 s = ax.scatter(xte,yte,zte)
 
 plt.show()
-
 
 
 
