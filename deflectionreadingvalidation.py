@@ -39,29 +39,31 @@ for i in range(len(te_number)):
     z_defte.append(defl[te_number[i],4])
     
 import matplotlib.pyplot as plt
-plt.subplot(221)
-plt.scatter(xle, y_defle)
-plt.title("Leading edge deflection in y-direction")
-plt.xlabel("Spanwise location [mm]")
-plt.ylabel("y-deflection [mm]")
-
-plt.subplot(222)
-plt.scatter(xte, y_defte)
-plt.title("Trailing edge deflection in y-direction")
-plt.xlabel("Spanwise location [mm]")
-plt.ylabel("y-deflection [mm]")
-
-plt.subplot(223)
-plt.scatter(xle, z_defle)
-plt.title("Leading edge deflection in z-direction")
-plt.xlabel("Spanwise location [mm]")
-plt.ylabel("z-deflection [mm]")
-
-plt.subplot(224)
-plt.scatter(xte,z_defte)
-plt.title("Trailing edge deflection in z-direction")
-plt.xlabel("Spanwise location [mm]")
-plt.ylabel("z-deflection [mm]")
+# =============================================================================
+# plt.subplot(221)
+# plt.scatter(xle, y_defle)
+# plt.title("Leading edge deflection in y-direction")
+# plt.xlabel("Spanwise location [mm]")
+# plt.ylabel("y-deflection [mm]")
+# 
+# plt.subplot(222)
+# plt.scatter(xte, y_defte)
+# plt.title("Trailing edge deflection in y-direction")
+# plt.xlabel("Spanwise location [mm]")
+# plt.ylabel("y-deflection [mm]")
+# 
+# plt.subplot(223)
+# plt.scatter(xle, z_defle)
+# plt.title("Leading edge deflection in z-direction")
+# plt.xlabel("Spanwise location [mm]")
+# plt.ylabel("z-deflection [mm]")
+# 
+# plt.subplot(224)
+# plt.scatter(xte,z_defte)
+# plt.title("Trailing edge deflection in z-direction")
+# plt.xlabel("Spanwise location [mm]")
+# plt.ylabel("z-deflection [mm]")
+# =============================================================================
 
 
 #ilist= []

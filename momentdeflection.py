@@ -12,6 +12,8 @@ from MoI_non_idealized import I_yy, I_zz, I_zy
 from reactionforces import *
 import matplotlib.pyplot as plt
 import copy
+import Torsion as T
+from deflectionreadingvalidation import xle, y_defle, xte, y_defte, z_defle, z_defte
 
 def heaviside(x):
     if x < 0:
@@ -138,15 +140,65 @@ alphawT = alphaw1 + alphaw2
 for i in range(0, len(Defl)):
     delta[i,1] = delta[i,0]*m.sin(alphavT) + delta[i,1] *m.cos(alphavT)
     delta[i,2] = delta[i,0]*m.sin(alphawT) + delta[i,2] *m.cos(alphawT)
-
+LEdelta = np.zeros((1692,3))
+TEdelta = np.zeros((1692,3))
+for i in range(0, len(Defl)):
+    LEdelta [i,0]= Defl[i,0]
+    TEdelta [i,0]= Defl[i,0]
+    LEdelta [i,1]= T.displacement[0][i] + delta[i,1]
+    LEdelta [i,2]= delta[i,2]
+    TEdelta [i,1]= T.displacement[1][i] + delta[i,1]
+    TEdelta [i,2]= delta[i,2]
+    
 #plots
 # =============================================================================
-plt.figure(1)
-plt.subplot(111)
-plt.plot(delta[:,0], delta[:,1],"r") 
-plt.plot(delta[:,0], delta[:,2],"b") 
-plt.show()
 # =============================================================================
+# plt.figure(1)
+# plt.subplot(111)
+# plt.plot(LEdelta[:,0], LEdelta[:,1],"r") 
+# plt.plot(LEdelta[:,0], TEdelta[:,1],"b") 
+# plt.show()
+# =============================================================================
+# =============================================================================
+y_deftec = np.zeros((67,1))
+y_deflec = np.zeros((68,1))
+for i in range(len(y_defte)):
+    y_deftec[i] = y_defte[i]-0.75*C_a*1000*m.sin(rad)
+    y_deflec[i] = y_defle[i]+0.25*C_a*1000*m.sin(rad) 
+
+plt.subplot(221)
+plt.scatter(xle, y_deflec)
+plt.scatter((LEdelta[:,0]*1000), (LEdelta[:,1]*1000))
+plt.axis([0,1692,-80,80])
+plt.title("Leading edge deflection in v-direction")
+plt.xlabel("Spanwise location [mm]")
+plt.ylabel("y-deflection [mm]")
+
+plt.subplot(222)
+plt.scatter(xte, y_deftec)
+plt.scatter((TEdelta[:,0]*1000), (TEdelta[:,1]*1000))
+plt.axis([0,1692,-80,80])
+plt.title("Trailing edge deflection in v-direction")
+plt.xlabel("Spanwise location [mm]")
+plt.ylabel("y-deflection [mm]")
+
+plt.subplot(223)
+plt.scatter(xle, z_defle)
+plt.scatter((LEdelta[:,0]*1000), (LEdelta[:,2]*1000))
+plt.axis([0,1692,-80,80])
+plt.title("Leading edge deflection in w-direction")
+plt.xlabel("Spanwise location [mm]")
+plt.ylabel("z-deflection [mm]")
+
+plt.subplot(224)
+plt.scatter(xte, z_defte)
+plt.scatter((TEdelta[:,0]*1000), (TEdelta[:,2]*1000))
+plt.axis([0,1692,-80,80])
+plt.title("Trailing edge deflection in w-direction")
+plt.xlabel("Spanwise location [mm]")
+plt.ylabel("z-deflection [mm]")
+
+#xle, y_defle, xte, y_defte, z_defle, z_defte
 
 # =============================================================================
 # x = x*(cos alpha)-y*sin(alpha)

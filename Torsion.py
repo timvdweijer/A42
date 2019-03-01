@@ -27,9 +27,9 @@ theta_r = radians(theta)                                    #convert degrees to 
 q_w = 0#sin(theta_r) * q                                      #z_component of q
 q_v = cos(theta_r) * q                                      #y_component of q
 P_w = cos(theta_r) * P                                  #z_component of P
-P_v = 0#sin(theta_r) * P                                      #y_component of P
+P_v = sin(theta_r) * P                                      #y_component of P
 Fact_w =  cos(theta_r) *  F_act                            #z_component of jammed actuator
-Fact_v = 0#sin(theta_r) * F_act                                #y_component of jammed actuator
+Fact_v = sin(theta_r) * F_act                                #y_component of jammed actuator
 
 
 lstep = .001                                                #define spanwise step
@@ -141,10 +141,10 @@ def displacement_calc(theta, radius, dis_TE):
     for j in range(0, len(theta)):
         displacementLE.append( -1*theta[j]*radius)
         displacementTE.append(theta[j]* dis_TE)
-    return displacementLE, displacementTE
+    return [displacementLE, displacementTE]
 displacement = displacement_calc(theta_corrected, h/2, C_a -h/2)
 
-plt.plot(xx, displacement[0], xx,displacement[1])
+#plt.plot(xx, displacement[0], xx,displacement[1])
         
 
 
