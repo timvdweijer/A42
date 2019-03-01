@@ -1,17 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Feb 22 13:11:10 2019
-
-@author: timvd
-"""
 from math import *
 from constants import *
 import numpy as np
 import coordinates
 import matplotlib.pyplot as plt
 from reactionforces import *
-
-
 
 """
 Calculation of the torsion due to Fact, P and q around hinge 2 check if that's okay
@@ -34,63 +26,20 @@ Fact_v = sin(theta_r) * F_act                                #y_component of jam
 
 lstep = .001                                                #define spanwise step
 x = np.arange(0, l_a + lstep, lstep)                        #create array of x points spanwise
-"""
-if F_1V is in positive y direction, and shearloc_y is negative from reference frame--> negative location, no sign modification needed as pitch down is positve moment
-same principle upholds for F_1W  but now sign modification is needed
-Fact_v: moment is negative due to direction of F act, sign modification needed ----> other sign for P as it has opporite vector
-Fact_w: no sign modification is needed because of direction ---> other sign for P
-"""
-# =============================================================================
-# 
-# T = []
-# for x in np.arange(0, l_a+step, step):
-#     T.append(\
-#         F_1V * shearloc_z* (heaviside(x-x_1)) +\      
-#     -1* F_1W * shearloc_y* (heaviside(x-x_1)) +\            
-#         F_2V * shearloc_z* (heaviside(x-x_2)) +\
-#     -1* F_2W * shearloc_y* (heaviside(x-x_2)) +\
-#         F_3V * shearloc_z* (heaviside(x-x_3)) +\
-#     -1* F_3W * shearloc_y* (heaviside(x-x_3)) +\
-#     -1* Fact_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 - x_a / 2.))) +\
-#         Fact_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 - x_a / 2.))) +\     
-#         P_v * (h/2 - shearloc_z) * (heaviside(x-(x_2 + x_a / 2.))) +\     
-#     -1* P_w * (h/2 - shearloc_y) * (heaviside(x-(x_2 + x_a / 2.))) +\     
-#         q_v * (-1 * (0.25*C_a - h/2.) - shearloc_z) +\
-#     -1* q_w * (shearloc_y))
-# =============================================================================
 T = []
+T2 = []
 xx = []
 for x in np.arange(0, l_a + lstep, lstep):
     T.append(-1*Fact_v * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + Fact_w * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) + P_v * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) - P_w * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) +  q_v * x* (-1 * (0.25*C_a - h/2.)))
     xx.append(x*1000)
-# =============================================================================
-# plt.plot(xx ,T)
-# =============================================================================
-# =============================================================================
-# T = []                                                      #create empty list for torque, the zero is to d
-# xx =[]                                                      #create empty list for x_positions, the zero is to d
-# for i in np.nditer(x):
-#     if i == 0:
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #if x = 0 then calculate first torque due to q, loter on the value before is needed
-#         T.append(Tq)                                        
-#         xx.append(i)
-#     elif i >= (x_2 - x_a/2) and i < (x_2 - x_a/2.+lstep):   #at actuator 1 which is jammed
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q 
-#         Tact = -1* (Fact_w * h/2 + -1* Fact_v *h/2)         #calculate torque due to 
-#         T.append(Tq +Tact + T[int(i*1000) - 1])             #append value to T_lst of all components + last component
-#         xx.append(i)
-#     elif i >= (x_2 + x_a/2.) and i < (x_2 + x_a/2.+lstep):  #non-jammed actuator     
-#         TP = P_w * h/2 + -1* P_v *h/2                       #calculate torque due to P
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.))              #calculate torque due to q
-#         T.append(Tq + TP + T[int(i*1000) - 1])              #append value to T_lst of all components + last component
-#         xx.append(i)
-#     else:
-#         Tq = (-1*q_v*lstep* (0.25*C_a - h/2.) )             #at all values except actuators add only q_acts
-#         T.append(Tq + T[int(i*1000) - 1])
-#         xx.append(i)
-# plt.plot(xx,T)
-# plt.show()
-# =============================================================================
+    T2.append(( Fact_w * (h/2) * (heaviside(x-(x_2 - x_a / 2.))) - P_w * (h/2) * (heaviside(x-(x_2 + x_a / 2.))) +  q_v * x* (-1 * (0.25*C_a - h/2.))))
+    
+plt.plot(xx ,T, label= "Y and Z components ")
+plt.plot(xx, T2, label = "Only Y components")
+plt.ylabel("Torsion [Nm]")
+plt.xlabel("Span wise location with origin at wingtip close to hinge 1")
+plt.legend()
+plt.show()
 
 area_1 = pi * (h/2)**2 /2                                   #enclosed areas of cell 1 and two
 area_2 = (C_a- h/2) * h
@@ -130,10 +79,8 @@ def theta(q_T, lstep): #gives the angle at all location
     finaltheta = theta1 +  theta2
     return (finaltheta)
 
-theta_corrected = theta(q_T, lstep) #- theta(q_T, lstep)[int((x_2-x_a/2) *1000)] #assume deflection is zero at hinge 1 
-# =============================================================================
-# plt.plot(xx, theta_corrected)#, xx, T)
-# =============================================================================
+theta_corrected = theta(q_T, lstep)
+plt.plot(xx, theta_corrected)#, xx, T)
 
 def displacement_calc(theta, radius, dis_TE):
     displacementLE = []

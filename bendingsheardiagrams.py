@@ -75,11 +75,9 @@ for x in np.arange(0, l_a+step, step):
     Mz_ut.append(-1*(q * np.cos(rad))*((x**2)/2)+Ry1_ut*heaviside(x-x_1)*(x-x_1)+Ry2_ut*heaviside(x-x_2)*(x-x_2)+Ry3_ut*heaviside(x-x_3)*(x-x_3)+F_act_ut*np.sin(rad)*heaviside(x-(x_2-x_a/2))*(x-(x_2-x_a/2))-P*np.sin(rad)*heaviside(x-(x_2+x_a/2))*(x-(x_2+x_a/2)))
 
 x = np.arange(0, l_a+step, step)
-#Torque
 
-#Deflections
 
-#plots
+
 # =============================================================================
 # plt.figure(1)
 # plt.subplot(211)
@@ -168,3 +166,4 @@ plt.show()
 #9 unknowns: Ry1, Ry2, Ry3, Rz1, Rz2, Rz3, Ract1, K1, K2
 #9 equations: SumFy, SumFz, SumMz, SumMy, Eqn7, Eqn8, Eqn9
       
+
