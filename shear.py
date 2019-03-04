@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 25 22:36:28 2019
 
-@author: timvd
-"""
 from coordinates import (cellI_z, cellII_z,  cellI_y, cellII_y, dst_I, dst_II, a)
 import numpy as np
 import boom_area

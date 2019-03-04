@@ -30,33 +30,3 @@ norm_stress = normalstress(bendingsheardiagrams.My, bendingsheardiagrams.Mz,\
                  coordinates.a[0], coordinates.a[1], 
                  MoI_non_idealized.centroid_y, MoI_non_idealized.centroid_z,\
                  constants.n_st, constants.C_a, constants.h /2.)    
-
-# =============================================================================
-# import coordinates
-# import bendingsheardiagrams
-# import MoI_non_idealized
-# import constants
-# import numpy as np
-# 
-# def normalstress(My, Mz, Iyy, Izz, y_coordinate, z_coordinate, centroid_y, centroid_z, n_stringers):
-#     stress_lst = np.zeros((len(My),15))
-# 
-# 
-#     for i in range(0, len(My)):
-#         #local_stresses = []
-#         for j in range(0, n_stringers + 2):
-#             y_tocentroid = y_coordinate[j] - centroid_y  
-#             z_tocentroid = z_coordinate[j] - centroid_z 
-#             stress_boom = (Mz[i]*(y_tocentroid))/ Izz + (My[i]*(z_tocentroid))/Iyy
-#             #local_stresses.append(stress_boom)
-#             stress_lst[i][j] = stress_boom
-#         #stress_lst.append(local_stresses)
-#     return stress_lst   #, My
-# 
-# norm_stress = normalstress(bendingsheardiagrams.My, bendingsheardiagrams.Mz,\
-#                  MoI_non_idealized.I_yy, MoI_non_idealized.I_zz, \
-#                  coordinates.a[0], coordinates.a[1], 
-#                  MoI_non_idealized.centroid_y, MoI_non_idealized.centroid_z,\
-#                  constants.n_st)    
-# 
-# =============================================================================
